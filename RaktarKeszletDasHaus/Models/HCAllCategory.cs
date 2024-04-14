@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace RaktarKeszletDasHaus.Models
 {
+    [DataContract]
+    [Serializable]
     internal class HCAllCategory
     {
 
@@ -17,8 +14,10 @@ namespace RaktarKeszletDasHaus.Models
             StoreId = 0;
             ParentId = string.Empty;
             Name = string.Empty;
+            Description = string.Empty;
             SourceType = CategorySourceTypeDTO.Manual;
             ImageUrl = string.Empty;
+            BannerImageUrl = string.Empty;
             CustomPageUrl = string.Empty;
             CustomPageOpenInNewWindow = false;
             ShowInTopMenu = true;
