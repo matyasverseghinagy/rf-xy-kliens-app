@@ -20,6 +20,8 @@ namespace RaktarKeszletDasHaus
     {
         private TermekAdatok selectedTermek;
         private List<HCAllCategory> categories;
+        private List<TermekAdatokDG> TermekekListaDataSource;
+        private BindingSource DGBindigSource;
 
         //BindingSource productsList;
         //List<HCProduct> products;
@@ -27,6 +29,8 @@ namespace RaktarKeszletDasHaus
         public Form1()
         {
             InitializeComponent();
+
+
 
             ListHotCakesCategoryAPI();
             for (int i = 0; i < categories.Count(); i++)
@@ -38,12 +42,29 @@ namespace RaktarKeszletDasHaus
                 }
             }
 
+
             comboBox1.DataSource = categories;
             comboBox1.ValueMember = "Bvin";
             comboBox1.DisplayMember = "Name";
             comboBox1.SelectedIndex = 0;
 
             selectedTermek = new TermekAdatok();
+
+            DGBindigSource = new BindingSource();
+            DGBindigSource.DataSource = TermekekListaDataSource;
+
+            HCAllCategory selectedBvin = (HCAllCategory)comboBox1.SelectedItem;
+            //Trace.Write(selectedbvin.Bvin + "\n");
+            selectedTermek.Category = selectedBvin.Name;
+            ListHotCakesProductsAPI(selectedBvin.Bvin);
+
+            //dataGridView1.Enabled = false;
+            dataGridView1.MultiSelect = false;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
+
+
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -86,20 +107,33 @@ namespace RaktarKeszletDasHaus
 
 
             hotCakesClient.Dispose();
+            TermekekListaDataSource = new List<TermekAdatokDG>(products.Count());
+            for (int i = 0; i < products.Count; i++)
+            {
+                TermekAdatokDG tmp = new TermekAdatokDG();
 
+                tmp.CategoryColumn = selectedTermek.Category;
+                tmp.SKUColumn = products[i].Sku;
+                tmp.ProductNameColumn = products[i].ProductName;
+                tmp.LocalInventoryColumn = 0;
+                tmp.OnlineInventoryColumn = 0;
 
+                TermekekListaDataSource.Add(tmp);
+            }
+            DGBindigSource.DataSource = TermekekListaDataSource;
+            dataGridView1.DataSource = DGBindigSource;
 
-            listBox2.DataSource = new List<string>();
-            listBox2.DataSource = products;
-            listBox2.ValueMember = "Bvin";
-            listBox2.DisplayMember = "ProductName";
-            listBox2.SelectedIndex = 0;
+            //listBox2.DataSource = new List<string>();
+            //listBox2.DataSource = products;
+            //listBox2.ValueMember = "Bvin";
+            //listBox2.DisplayMember = "ProductName";
+            //listBox2.SelectedIndex = 0;
 
-            HCProduct tmp = (HCProduct)listBox2.SelectedItem;
-            selectedTermek.Sku = tmp.Sku;
-            selectedTermek.Bvin = tmp.Bvin;
-            selectedTermek.ListPrice = tmp.ListPrice;
-            selectedTermek.ProductName = tmp.ProductName;
+            //HCProduct tmp = (HCProduct)listBox2.SelectedItem;
+            //selectedTermek.Sku = tmp.Sku;
+            //selectedTermek.Bvin = tmp.Bvin;
+            //selectedTermek.ListPrice = tmp.ListPrice;
+            //selectedTermek.ProductName = tmp.ProductName;
 
 
 
@@ -153,18 +187,7 @@ namespace RaktarKeszletDasHaus
 
         }
 
-        private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            HCAllCategory selectedbvin = (HCAllCategory)listBox1.SelectedItem;
-            Trace.Write(selectedbvin.Bvin + "\n");
-            ListHotCakesProductsAPI(selectedbvin.Bvin);
-        }
 
-        private void panel4_MouseClick(object sender, MouseEventArgs e)
-        {
-            ListHotCakesCategoryAPI();
-            
-        }
 
 
         private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -188,6 +211,26 @@ namespace RaktarKeszletDasHaus
             //Trace.Write(selectedbvin.Bvin + "\n");
             selectedTermek.Category = selectedBvin.Name;
             ListHotCakesProductsAPI(selectedBvin.Bvin);
+        }
+
+        private void panel4_MouseClick(object sender, MouseEventArgs e)
+        {
+            ListHotCakesCategoryAPI();
+        }
+
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        {
+            //HCProduct tmp = (HCProduct)listBox2.SelectedItem;
+            //selectedTermek.Sku = tmp.Sku;
+            //selectedTermek.Bvin = tmp.Bvin;
+            //selectedTermek.ListPrice = tmp.ListPrice;
+            //selectedTermek.ProductName = tmp.ProductName;
+            //termekNevL.Text = selectedTermek.ProductName;
+            //skuNevL.Text = selectedTermek.Sku;
+            //kategoriaNevL.Text = selectedTermek.Category;
+            //int tmpint = (int)selectedTermek.ListPrice;
+            //arNevL.Text = tmpint.ToString() + " Ft";
+            //bvinNevL.Text = selectedTermek.Bvin;
         }
     }
 }

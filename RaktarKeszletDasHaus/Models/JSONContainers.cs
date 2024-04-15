@@ -31,6 +31,31 @@ namespace RaktarKeszletDasHaus.Models
         public string Category { get; set; }
     }
 
+    [DataContract]
+    [Serializable]
+    internal class TermekAdatokDG
+    {
+        public TermekAdatokDG()
+        {
+            CategoryColumn = string.Empty;
+            SKUColumn = string.Empty;
+            ProductNameColumn = string.Empty;
+            LocalInventoryColumn = 0;
+            OnlineInventoryColumn = 0;
+            
+        }
+        [DataMember]
+        public int OnlineInventoryColumn { get; set; }
+        [DataMember]
+        public string ProductNameColumn { get; set; }
+        [DataMember]
+        public int LocalInventoryColumn { get; set; }
+        [DataMember]
+        public string SKUColumn { get; set; }
+        [DataMember]
+        public string CategoryColumn { get; set; }
+    }
+
 
     [DataContract]
     [Serializable]

@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            listBox1 = new ListBox();
             dataGridView1 = new DataGridView();
             listBox2 = new ListBox();
             panel1 = new Panel();
@@ -66,18 +65,6 @@
             panel3.SuspendLayout();
             SuspendLayout();
             // 
-            // listBox1
-            // 
-            listBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(731, 160);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(229, 349);
-            listBox1.TabIndex = 3;
-            listBox1.Visible = false;
-            listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
-            // 
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -87,15 +74,17 @@
             dataGridView1.RowTemplate.Height = 25;
             dataGridView1.Size = new Size(703, 583);
             dataGridView1.TabIndex = 4;
+            dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
             // 
             // listBox2
             // 
             listBox2.FormattingEnabled = true;
             listBox2.ItemHeight = 15;
-            listBox2.Location = new Point(528, 160);
+            listBox2.Location = new Point(458, 206);
             listBox2.Name = "listBox2";
-            listBox2.Size = new Size(295, 349);
+            listBox2.Size = new Size(467, 394);
             listBox2.TabIndex = 5;
+            listBox2.Visible = false;
             listBox2.SelectedIndexChanged += listBox2_SelectedIndexChanged;
             // 
             // panel1
@@ -445,7 +434,6 @@
             Controls.Add(panel1);
             Controls.Add(listBox2);
             Controls.Add(dataGridView1);
-            Controls.Add(listBox1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "Raktárkészlet nyilvántartás - DasHaus ©";
@@ -459,7 +447,6 @@
         }
 
         #endregion
-        private ListBox listBox1;
         private DataGridView dataGridView1;
         private ListBox listBox2;
         private Panel panel1;
