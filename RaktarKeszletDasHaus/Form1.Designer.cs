@@ -40,7 +40,7 @@
             // button1
             // 
             button1.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button1.Location = new Point(657, 399);
+            button1.Location = new Point(656, 535);
             button1.Name = "button1";
             button1.Size = new Size(131, 39);
             button1.TabIndex = 0;
@@ -62,7 +62,7 @@
             listBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             listBox1.FormattingEnabled = true;
             listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(12, 26);
+            listBox1.Location = new Point(12, 162);
             listBox1.Name = "listBox1";
             listBox1.Size = new Size(229, 349);
             listBox1.TabIndex = 3;
@@ -90,7 +90,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(799, 586);
             Controls.Add(listBox2);
             Controls.Add(dataGridView1);
             Controls.Add(listBox1);

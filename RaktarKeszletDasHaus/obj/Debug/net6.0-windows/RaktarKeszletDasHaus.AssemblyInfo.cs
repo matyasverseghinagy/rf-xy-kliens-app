@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RaktarKeszletDasHaus")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82e0a3edbba8386b20f2e587bf3feda8438af2e1")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5d9da7da0ca0bc146339ab3eaa7737955a608cbc")]
 [assembly: System.Reflection.AssemblyProductAttribute("RaktarKeszletDasHaus")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RaktarKeszletDasHaus")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
