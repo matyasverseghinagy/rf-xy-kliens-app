@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34701.34
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaktarKeszletDasHaus", "RaktarKeszletDasHaus\RaktarKeszletDasHaus.csproj", "{FBACC7A7-43F4-44DD-9227-439D0A03ACDD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FBACC7A7-43F4-44DD-9227-439D0A03ACDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FBACC7A7-43F4-44DD-9227-439D0A03ACDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FBACC7A7-43F4-44DD-9227-439D0A03ACDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FBACC7A7-43F4-44DD-9227-439D0A03ACDD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D177B56-2496-4D31-854D-DFBAE4AE1A2D}
+	EndGlobalSection
+EndGlobal
