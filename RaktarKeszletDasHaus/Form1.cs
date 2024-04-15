@@ -14,8 +14,12 @@ using static System.Windows.Forms.DataFormats;
 namespace RaktarKeszletDasHaus
 {
 
+
+
     public partial class Form1 : Form
     {
+        private TermekAdatok selectedTermek;
+        private List<HCAllCategory> categories;
 
         //BindingSource productsList;
         //List<HCProduct> products;
@@ -24,6 +28,22 @@ namespace RaktarKeszletDasHaus
         {
             InitializeComponent();
 
+            ListHotCakesCategoryAPI();
+            for (int i = 0; i < categories.Count(); i++)
+            {
+                //Trace.WriteLine(categories[i].ParentId);
+                if (categories[i].ParentId == String.Empty)
+                {
+                    categories.RemoveAt(i);
+                }
+            }
+
+            comboBox1.DataSource = categories;
+            comboBox1.ValueMember = "Bvin";
+            comboBox1.DisplayMember = "Name";
+            comboBox1.SelectedIndex = 0;
+
+            selectedTermek = new TermekAdatok();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -64,12 +84,25 @@ namespace RaktarKeszletDasHaus
             List<HCProduct> products = productpage.Products;
 
 
+
             hotCakesClient.Dispose();
+
+
+
             listBox2.DataSource = new List<string>();
             listBox2.DataSource = products;
             listBox2.ValueMember = "Bvin";
             listBox2.DisplayMember = "ProductName";
             listBox2.SelectedIndex = 0;
+
+            HCProduct tmp = (HCProduct)listBox2.SelectedItem;
+            selectedTermek.Sku = tmp.Sku;
+            selectedTermek.Bvin = tmp.Bvin;
+            selectedTermek.ListPrice = tmp.ListPrice;
+            selectedTermek.ProductName = tmp.ProductName;
+
+
+
         }
 
         private void ListHotCakesCategoryAPI()
@@ -86,7 +119,7 @@ namespace RaktarKeszletDasHaus
 
             // List data response.
             //HttpResponseMessage response = hotCakesClient.GetAsync(urlParameters).Result;  // Blocking call! Program will wait here until a response is received or a timeout occurs.
-            List<HCAllCategory> categories = hotCakesClient.GetFromJsonAsync<HCJSONCategories>(urlParameters).Result.Content;
+            categories = hotCakesClient.GetFromJsonAsync<HCJSONCategories>(urlParameters).Result.Content;
             //if (response.IsSuccessStatusCode)
             //{
             //    Trace.WriteLine("Got it!");
@@ -116,10 +149,7 @@ namespace RaktarKeszletDasHaus
             //HCAllCategory selectedbvin = (HCAllCategory)listBox1.SelectedItem;
             //ListHotCakesProductsAPI(selectedbvin.Bvin);
 
-            listBox1.DataSource = categories;
-            listBox1.ValueMember = "Bvin";
-            listBox1.DisplayMember = "Name";
-            listBox1.SelectedIndex = 0;
+
 
         }
 
@@ -133,6 +163,31 @@ namespace RaktarKeszletDasHaus
         private void panel4_MouseClick(object sender, MouseEventArgs e)
         {
             ListHotCakesCategoryAPI();
+            
+        }
+
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            HCProduct tmp = (HCProduct)listBox2.SelectedItem;
+            selectedTermek.Sku = tmp.Sku;
+            selectedTermek.Bvin = tmp.Bvin;
+            selectedTermek.ListPrice = tmp.ListPrice;
+            selectedTermek.ProductName = tmp.ProductName;
+            termekNevL.Text = selectedTermek.ProductName;
+            skuNevL.Text = selectedTermek.Sku;
+            kategoriaNevL.Text = selectedTermek.Category;
+            int tmpint = (int)selectedTermek.ListPrice;
+            arNevL.Text = tmpint.ToString() + " Ft";
+            bvinNevL.Text = selectedTermek.Bvin;
+        }
+
+        private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            HCAllCategory selectedBvin = (HCAllCategory)comboBox1.SelectedItem;
+            //Trace.Write(selectedbvin.Bvin + "\n");
+            selectedTermek.Category = selectedBvin.Name;
+            ListHotCakesProductsAPI(selectedBvin.Bvin);
         }
     }
 }

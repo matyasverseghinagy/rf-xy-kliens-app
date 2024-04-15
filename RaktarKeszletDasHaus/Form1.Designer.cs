@@ -53,11 +53,11 @@
             label9 = new Label();
             label10 = new Label();
             label11 = new Label();
-            label12 = new Label();
-            label13 = new Label();
-            label14 = new Label();
-            label15 = new Label();
-            label16 = new Label();
+            termekNevL = new Label();
+            kategoriaNevL = new Label();
+            skuNevL = new Label();
+            arNevL = new Label();
+            bvinNevL = new Label();
             panel3 = new Panel();
             panel4 = new Panel();
             label17 = new Label();
@@ -96,7 +96,7 @@
             listBox2.Name = "listBox2";
             listBox2.Size = new Size(295, 349);
             listBox2.TabIndex = 5;
-            listBox2.Visible = false;
+            listBox2.SelectedIndexChanged += listBox2_SelectedIndexChanged;
             // 
             // panel1
             // 
@@ -126,6 +126,7 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(233, 23);
             comboBox1.TabIndex = 7;
+            comboBox1.SelectionChangeCommitted += comboBox1_SelectionChangeCommitted;
             // 
             // label1
             // 
@@ -315,65 +316,65 @@
             label11.TabIndex = 25;
             label11.Text = "Bvin:";
             // 
-            // label12
+            // termekNevL
             // 
-            label12.BackColor = Color.Transparent;
-            label12.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label12.ForeColor = Color.White;
-            label12.Location = new Point(371, 9);
-            label12.Name = "label12";
-            label12.Size = new Size(589, 20);
-            label12.TabIndex = 26;
-            label12.Text = "nincs termék kiválasztva";
-            label12.TextAlign = ContentAlignment.TopRight;
+            termekNevL.BackColor = Color.Transparent;
+            termekNevL.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            termekNevL.ForeColor = Color.White;
+            termekNevL.Location = new Point(371, 9);
+            termekNevL.Name = "termekNevL";
+            termekNevL.Size = new Size(589, 20);
+            termekNevL.TabIndex = 26;
+            termekNevL.Text = "nincs termék kiválasztva";
+            termekNevL.TextAlign = ContentAlignment.TopRight;
             // 
-            // label13
+            // kategoriaNevL
             // 
-            label13.BackColor = Color.Transparent;
-            label13.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label13.ForeColor = Color.White;
-            label13.Location = new Point(371, 29);
-            label13.Name = "label13";
-            label13.Size = new Size(589, 20);
-            label13.TabIndex = 27;
-            label13.Text = "nincs termék kiválasztva";
-            label13.TextAlign = ContentAlignment.TopRight;
+            kategoriaNevL.BackColor = Color.Transparent;
+            kategoriaNevL.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            kategoriaNevL.ForeColor = Color.White;
+            kategoriaNevL.Location = new Point(371, 29);
+            kategoriaNevL.Name = "kategoriaNevL";
+            kategoriaNevL.Size = new Size(589, 20);
+            kategoriaNevL.TabIndex = 27;
+            kategoriaNevL.Text = "nincs termék kiválasztva";
+            kategoriaNevL.TextAlign = ContentAlignment.TopRight;
             // 
-            // label14
+            // skuNevL
             // 
-            label14.BackColor = Color.Transparent;
-            label14.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label14.ForeColor = Color.White;
-            label14.Location = new Point(371, 49);
-            label14.Name = "label14";
-            label14.Size = new Size(589, 20);
-            label14.TabIndex = 28;
-            label14.Text = "nincs termék kiválasztva";
-            label14.TextAlign = ContentAlignment.TopRight;
+            skuNevL.BackColor = Color.Transparent;
+            skuNevL.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            skuNevL.ForeColor = Color.White;
+            skuNevL.Location = new Point(371, 49);
+            skuNevL.Name = "skuNevL";
+            skuNevL.Size = new Size(589, 20);
+            skuNevL.TabIndex = 28;
+            skuNevL.Text = "nincs termék kiválasztva";
+            skuNevL.TextAlign = ContentAlignment.TopRight;
             // 
-            // label15
+            // arNevL
             // 
-            label15.BackColor = Color.Transparent;
-            label15.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label15.ForeColor = Color.White;
-            label15.Location = new Point(371, 69);
-            label15.Name = "label15";
-            label15.Size = new Size(589, 20);
-            label15.TabIndex = 29;
-            label15.Text = "nincs termék kiválasztva";
-            label15.TextAlign = ContentAlignment.TopRight;
+            arNevL.BackColor = Color.Transparent;
+            arNevL.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            arNevL.ForeColor = Color.White;
+            arNevL.Location = new Point(371, 69);
+            arNevL.Name = "arNevL";
+            arNevL.Size = new Size(589, 20);
+            arNevL.TabIndex = 29;
+            arNevL.Text = "nincs termék kiválasztva";
+            arNevL.TextAlign = ContentAlignment.TopRight;
             // 
-            // label16
+            // bvinNevL
             // 
-            label16.BackColor = Color.Transparent;
-            label16.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label16.ForeColor = Color.White;
-            label16.Location = new Point(371, 95);
-            label16.Name = "label16";
-            label16.Size = new Size(589, 20);
-            label16.TabIndex = 30;
-            label16.Text = "nincs termék kiválasztva";
-            label16.TextAlign = ContentAlignment.TopRight;
+            bvinNevL.BackColor = Color.Transparent;
+            bvinNevL.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            bvinNevL.ForeColor = Color.White;
+            bvinNevL.Location = new Point(371, 95);
+            bvinNevL.Name = "bvinNevL";
+            bvinNevL.Size = new Size(589, 20);
+            bvinNevL.TabIndex = 30;
+            bvinNevL.Text = "nincs termék kiválasztva";
+            bvinNevL.TextAlign = ContentAlignment.TopRight;
             // 
             // panel3
             // 
@@ -417,11 +418,11 @@
             BackColor = Color.FromArgb(20, 33, 61);
             ClientSize = new Size(972, 710);
             Controls.Add(panel3);
-            Controls.Add(label16);
-            Controls.Add(label15);
-            Controls.Add(label14);
-            Controls.Add(label13);
-            Controls.Add(label12);
+            Controls.Add(bvinNevL);
+            Controls.Add(arNevL);
+            Controls.Add(skuNevL);
+            Controls.Add(kategoriaNevL);
+            Controls.Add(termekNevL);
             Controls.Add(label11);
             Controls.Add(label10);
             Controls.Add(label9);
@@ -482,11 +483,11 @@
         private Label label9;
         private Label label10;
         private Label label11;
-        private Label label12;
-        private Label label13;
-        private Label label14;
-        private Label label15;
-        private Label label16;
+        private Label termekNevL;
+        private Label kategoriaNevL;
+        private Label skuNevL;
+        private Label arNevL;
+        private Label bvinNevL;
         private Panel panel3;
         private Label label17;
         private Panel panel4;
