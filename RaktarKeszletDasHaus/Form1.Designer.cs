@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             dataGridView1 = new DataGridView();
-            listBox2 = new ListBox();
             panel1 = new Panel();
             panel2 = new Panel();
             comboBox1 = new ComboBox();
@@ -60,6 +60,7 @@
             panel3 = new Panel();
             panel4 = new Panel();
             label17 = new Label();
+            toolTip1 = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
@@ -72,20 +73,9 @@
             dataGridView1.Margin = new Padding(0);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(703, 583);
+            dataGridView1.Size = new Size(703, 560);
             dataGridView1.TabIndex = 4;
             dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
-            // 
-            // listBox2
-            // 
-            listBox2.FormattingEnabled = true;
-            listBox2.ItemHeight = 15;
-            listBox2.Location = new Point(458, 206);
-            listBox2.Name = "listBox2";
-            listBox2.Size = new Size(467, 394);
-            listBox2.TabIndex = 5;
-            listBox2.Visible = false;
-            listBox2.SelectedIndexChanged += listBox2_SelectedIndexChanged;
             // 
             // panel1
             // 
@@ -370,10 +360,10 @@
             panel3.BackColor = Color.FromArgb(252, 163, 17);
             panel3.Controls.Add(panel4);
             panel3.Controls.Add(label17);
-            panel3.Location = new Point(0, 682);
+            panel3.Location = new Point(0, 687);
             panel3.Margin = new Padding(0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(269, 28);
+            panel3.Size = new Size(972, 23);
             panel3.TabIndex = 7;
             // 
             // panel4
@@ -381,9 +371,9 @@
             panel4.BackColor = Color.Transparent;
             panel4.BackgroundImage = Properties.Resources.sync;
             panel4.BackgroundImageLayout = ImageLayout.Zoom;
-            panel4.Location = new Point(239, 3);
+            panel4.Location = new Point(949, 3);
             panel4.Name = "panel4";
-            panel4.Size = new Size(27, 22);
+            panel4.Size = new Size(20, 19);
             panel4.TabIndex = 2;
             panel4.MouseClick += panel4_MouseClick;
             // 
@@ -393,11 +383,11 @@
             label17.BackColor = Color.Transparent;
             label17.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label17.ForeColor = Color.FromArgb(20, 33, 61);
-            label17.Location = new Point(0, 6);
+            label17.Location = new Point(0, 0);
             label17.Name = "label17";
             label17.Size = new Size(111, 17);
             label17.TabIndex = 1;
-            label17.Text = "v0.1 - DasHaus ©";
+            label17.Text = "v0.2 - DasHaus ©";
             label17.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // Form1
@@ -432,7 +422,6 @@
             Controls.Add(label1);
             Controls.Add(comboBox1);
             Controls.Add(panel1);
-            Controls.Add(listBox2);
             Controls.Add(dataGridView1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
@@ -448,7 +437,6 @@
 
         #endregion
         private DataGridView dataGridView1;
-        private ListBox listBox2;
         private Panel panel1;
         private Panel panel2;
         private ComboBox comboBox1;
@@ -478,5 +466,6 @@
         private Panel panel3;
         private Label label17;
         private Panel panel4;
+        private ToolTip toolTip1;
     }
 }

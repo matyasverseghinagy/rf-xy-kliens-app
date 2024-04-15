@@ -7,8 +7,8 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Windows.Forms;
 using System.Runtime.Serialization;
 using static System.Windows.Forms.DataFormats;
+using System.Security.Permissions;
 
-//using Hotcakes.CommerceDTO.v1.Client;
 
 
 namespace RaktarKeszletDasHaus
@@ -22,6 +22,14 @@ namespace RaktarKeszletDasHaus
         private List<HCAllCategory> categories;
         private List<TermekAdatokDG> TermekekListaDataSource;
         private BindingSource DGBindigSource;
+        private bool selectionAllowed = false;
+
+        // DasHausColorPalette
+        private Color DasHausBlue = Color.FromArgb(20, 33, 61);
+        private Color DasHausYellow = Color.FromArgb(252, 163, 17);
+        private Color DasHausGrey = Color.FromArgb(229, 229, 229);
+        private Color DasHausBlack = Color.FromArgb(0, 0, 0);
+        private Color DasHausWhite = Color.FromArgb(255, 255, 255);
 
         //BindingSource productsList;
         //List<HCProduct> products;
@@ -29,8 +37,6 @@ namespace RaktarKeszletDasHaus
         public Form1()
         {
             InitializeComponent();
-
-
 
             ListHotCakesCategoryAPI();
             for (int i = 0; i < categories.Count(); i++)
@@ -42,33 +48,55 @@ namespace RaktarKeszletDasHaus
                 }
             }
 
-
             comboBox1.DataSource = categories;
             comboBox1.ValueMember = "Bvin";
             comboBox1.DisplayMember = "Name";
             comboBox1.SelectedIndex = 0;
 
             selectedTermek = new TermekAdatok();
-
             DGBindigSource = new BindingSource();
             DGBindigSource.DataSource = TermekekListaDataSource;
 
             HCAllCategory selectedBvin = (HCAllCategory)comboBox1.SelectedItem;
-            //Trace.Write(selectedbvin.Bvin + "\n");
             selectedTermek.Category = selectedBvin.Name;
             ListHotCakesProductsAPI(selectedBvin.Bvin);
 
-            //dataGridView1.Enabled = false;
-            dataGridView1.MultiSelect = false;
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            int dgw = dataGridView1.Width - 20 + 20;
 
 
+            dataGridView1.Columns["CategoryColumn"].DisplayIndex = 0;
+            dataGridView1.Columns["CategoryColumn"].HeaderText = "Kategória";
+            dataGridView1.Columns["CategoryColumn"].Width = Convert.ToInt32(dgw * 0.17);
+            dataGridView1.Columns["SKUColumn"].DisplayIndex = 1;
+            dataGridView1.Columns["SKUColumn"].HeaderText = "SKU";
+            dataGridView1.Columns["SKUColumn"].Width = Convert.ToInt32(dgw * 0.15);
+            dataGridView1.Columns["ProductNameColumn"].DisplayIndex = 2;
+            dataGridView1.Columns["ProductNameColumn"].HeaderText = "Terméknév";
+            dataGridView1.Columns["ProductNameColumn"].Width = Convert.ToInt32(dgw * 0.48);
+            dataGridView1.Columns["LocalInventoryColumn"].DisplayIndex = 3;
+            dataGridView1.Columns["LocalInventoryColumn"].HeaderText = "Bolti készlet";
+            dataGridView1.Columns["LocalInventoryColumn"].Width = Convert.ToInt32(dgw * 0.10);
+            dataGridView1.Columns["OnlineInventoryColumn"].DisplayIndex = 4;
+            dataGridView1.Columns["OnlineInventoryColumn"].HeaderText = "Online készlet";
+            dataGridView1.Columns["OnlineInventoryColumn"].Width = Convert.ToInt32(dgw * 0.10);
+            dataGridView1.Columns["BvinColumn"].Visible = false;
+            dataGridView1.Columns["BvinColumn"].DisplayIndex = 5;
+            dataGridView1.Columns["ListPriceColumn"].Visible = false;
+            dataGridView1.Columns["ListPriceColumn"].DisplayIndex = 6;
 
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+            {
+                dataGridView1.Columns[i].ReadOnly = true;
+                dataGridView1.Columns[i].HeaderCell.Style.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
+
+            selectionAllowed = true;
 
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+
             // Define the border style of the form to a dialog box.
             FormBorderStyle = FormBorderStyle.FixedDialog;
 
@@ -80,13 +108,32 @@ namespace RaktarKeszletDasHaus
 
             // Set the start position of the form to the center of the screen.
             StartPosition = FormStartPosition.CenterScreen;
-            //productsList = new BindingSource();
 
-            // Color settings
-            Color DasHausBlue = Color.FromArgb(20, 33, 61);
-            Color DasHausYellow = Color.FromArgb(252, 163, 17);
+            //Adattábla Módosítása
+            dataGridView1.BackgroundColor = DasHausWhite;
+            dataGridView1.AutoGenerateColumns = false;
+            dataGridView1.MultiSelect = false;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.ScrollBars = ScrollBars.Vertical;
+            dataGridView1.RowHeadersVisible = false;
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToOrderColumns = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.None;
+            dataGridView1.AllowUserToResizeColumns = false;
+            dataGridView1.AllowUserToResizeRows = false;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            dataGridView1.ColumnHeadersHeight = 50;
+            dataGridView1.EnableHeadersVisualStyles = false;
+            dataGridView1.ColumnHeadersDefaultCellStyle.BackColor = DasHausBlue;
+            dataGridView1.ColumnHeadersDefaultCellStyle.ForeColor = DasHausWhite;
+            dataGridView1.ColumnHeadersDefaultCellStyle.SelectionBackColor = DasHausBlue;
+            dataGridView1.ColumnHeadersDefaultCellStyle.SelectionForeColor = DasHausWhite;
+            dataGridView1.RowsDefaultCellStyle.SelectionForeColor = DasHausWhite;
+            dataGridView1.RowsDefaultCellStyle.SelectionBackColor = DasHausYellow;
+            dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
+            dataGridView1.GridColor = DasHausGrey;
 
-            //ListHotCakesCategoryAPI();
 
         }
 
@@ -104,8 +151,6 @@ namespace RaktarKeszletDasHaus
             int ProductNum = productpage.TotalProductCount;
             List<HCProduct> products = productpage.Products;
 
-
-
             hotCakesClient.Dispose();
             TermekekListaDataSource = new List<TermekAdatokDG>(products.Count());
             for (int i = 0; i < products.Count; i++)
@@ -117,25 +162,13 @@ namespace RaktarKeszletDasHaus
                 tmp.ProductNameColumn = products[i].ProductName;
                 tmp.LocalInventoryColumn = 0;
                 tmp.OnlineInventoryColumn = 0;
+                tmp.BvinColumn = products[i].Bvin;
+                tmp.ListPriceColumn = products[i].ListPrice;
 
                 TermekekListaDataSource.Add(tmp);
             }
             DGBindigSource.DataSource = TermekekListaDataSource;
             dataGridView1.DataSource = DGBindigSource;
-
-            //listBox2.DataSource = new List<string>();
-            //listBox2.DataSource = products;
-            //listBox2.ValueMember = "Bvin";
-            //listBox2.DisplayMember = "ProductName";
-            //listBox2.SelectedIndex = 0;
-
-            //HCProduct tmp = (HCProduct)listBox2.SelectedItem;
-            //selectedTermek.Sku = tmp.Sku;
-            //selectedTermek.Bvin = tmp.Bvin;
-            //selectedTermek.ListPrice = tmp.ListPrice;
-            //selectedTermek.ProductName = tmp.ProductName;
-
-
 
         }
 
@@ -188,23 +221,6 @@ namespace RaktarKeszletDasHaus
         }
 
 
-
-
-        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            HCProduct tmp = (HCProduct)listBox2.SelectedItem;
-            selectedTermek.Sku = tmp.Sku;
-            selectedTermek.Bvin = tmp.Bvin;
-            selectedTermek.ListPrice = tmp.ListPrice;
-            selectedTermek.ProductName = tmp.ProductName;
-            termekNevL.Text = selectedTermek.ProductName;
-            skuNevL.Text = selectedTermek.Sku;
-            kategoriaNevL.Text = selectedTermek.Category;
-            int tmpint = (int)selectedTermek.ListPrice;
-            arNevL.Text = tmpint.ToString() + " Ft";
-            bvinNevL.Text = selectedTermek.Bvin;
-        }
-
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
             HCAllCategory selectedBvin = (HCAllCategory)comboBox1.SelectedItem;
@@ -220,17 +236,26 @@ namespace RaktarKeszletDasHaus
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            //HCProduct tmp = (HCProduct)listBox2.SelectedItem;
-            //selectedTermek.Sku = tmp.Sku;
-            //selectedTermek.Bvin = tmp.Bvin;
-            //selectedTermek.ListPrice = tmp.ListPrice;
-            //selectedTermek.ProductName = tmp.ProductName;
-            //termekNevL.Text = selectedTermek.ProductName;
-            //skuNevL.Text = selectedTermek.Sku;
-            //kategoriaNevL.Text = selectedTermek.Category;
-            //int tmpint = (int)selectedTermek.ListPrice;
-            //arNevL.Text = tmpint.ToString() + " Ft";
-            //bvinNevL.Text = selectedTermek.Bvin;
+            if (selectionAllowed)
+            {
+                DataGridViewRow tmp = (DataGridViewRow)dataGridView1.CurrentRow;
+                Trace.WriteLine(tmp.Cells.Count);
+                selectedTermek.Sku = tmp.Cells["SKUColumn"].Value.ToString();
+                selectedTermek.Bvin = tmp.Cells["BvinColumn"].Value.ToString();
+                selectedTermek.ListPrice = Convert.ToDecimal(tmp.Cells["ListPriceColumn"].Value.ToString());
+                selectedTermek.ProductName = tmp.Cells["ProductNameColumn"].Value.ToString();
+                termekNevL.Text = selectedTermek.ProductName;
+                toolTip1.SetToolTip(termekNevL, termekNevL.Text);
+                skuNevL.Text = selectedTermek.Sku;
+                toolTip1.SetToolTip(skuNevL, skuNevL.Text);
+                kategoriaNevL.Text = selectedTermek.Category;
+                toolTip1.SetToolTip(kategoriaNevL, kategoriaNevL.Text);
+                int tmpint = (int)selectedTermek.ListPrice;
+                arNevL.Text = tmpint.ToString() + " Ft";
+                toolTip1.SetToolTip(arNevL, arNevL.Text);
+                bvinNevL.Text = selectedTermek.Bvin;
+                toolTip1.SetToolTip(bvinNevL, bvinNevL.Text);
+            }
         }
     }
 }

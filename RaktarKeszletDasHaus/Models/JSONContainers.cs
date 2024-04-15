@@ -42,8 +42,13 @@ namespace RaktarKeszletDasHaus.Models
             ProductNameColumn = string.Empty;
             LocalInventoryColumn = 0;
             OnlineInventoryColumn = 0;
-            
+            BvinColumn = string.Empty;
+            ListPriceColumn = 0m;
         }
+        [DataMember]
+        public string BvinColumn { get; set; }
+        [DataMember]
+        public decimal ListPriceColumn { get; set; }
         [DataMember]
         public int OnlineInventoryColumn { get; set; }
         [DataMember]
