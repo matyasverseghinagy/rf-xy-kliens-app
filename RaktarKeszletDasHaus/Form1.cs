@@ -40,13 +40,13 @@ namespace RaktarKeszletDasHaus
             // Set the start position of the form to the center of the screen.
             StartPosition = FormStartPosition.CenterScreen;
             //productsList = new BindingSource();
-            ListHotCakesCategoryAPI();
 
-        }
+            // Color settings
+            Color DasHausBlue = Color.FromArgb(20, 33, 61);
+            Color DasHausYellow = Color.FromArgb(252, 163, 17);
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            ListHotCakesCategoryAPI();
+            //ListHotCakesCategoryAPI();
+
         }
 
         private void ListHotCakesProductsAPI(string Bvin)
@@ -62,7 +62,7 @@ namespace RaktarKeszletDasHaus
             HCJSONProductsPage productpage = hotCakesClient.GetFromJsonAsync<HCJSONProductsPagesFinal>(urlParameters).Result.Content;
             int ProductNum = productpage.TotalProductCount;
             List<HCProduct> products = productpage.Products;
-            
+
 
             hotCakesClient.Dispose();
             listBox2.DataSource = new List<string>();
@@ -128,6 +128,11 @@ namespace RaktarKeszletDasHaus
             HCAllCategory selectedbvin = (HCAllCategory)listBox1.SelectedItem;
             Trace.Write(selectedbvin.Bvin + "\n");
             ListHotCakesProductsAPI(selectedbvin.Bvin);
+        }
+
+        private void panel4_MouseClick(object sender, MouseEventArgs e)
+        {
+            ListHotCakesCategoryAPI();
         }
     }
 }
