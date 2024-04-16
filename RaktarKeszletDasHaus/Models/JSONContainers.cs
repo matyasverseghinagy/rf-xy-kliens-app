@@ -1,49 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Runtime.Serialization;
 
 namespace RaktarKeszletDasHaus.Models
 {
-    [DataContract]
-    [Serializable]
-    internal class TermekAdatok
-    {
-        public TermekAdatok()
-        {
-            Bvin = string.Empty;
-            ProductName = string.Empty;
-            ListPrice = 0m;
-            Sku = string.Empty;
-            Category = string.Empty;
-        }
-        [DataMember]
-        public string Bvin { get; set; }
-        [DataMember]
-        public string ProductName { get; set; }
-        [DataMember]
-        public decimal ListPrice { get; set; }
-        [DataMember]
-        public string Sku { get; set; }
-        [DataMember]
-        public string Category { get; set; }
-    }
 
     [DataContract]
     [Serializable]
-    internal class TermekAdatokDG
+    public class TermekAdatok
     {
-        public TermekAdatokDG()
+        public TermekAdatok()
         {
             CategoryColumn = string.Empty;
+            CategoryBvinColumn = string.Empty;
             SKUColumn = string.Empty;
             ProductNameColumn = string.Empty;
             LocalInventoryColumn = 0;
             OnlineInventoryColumn = 0;
+            LocalInventoryColumnTmp = LocalInventoryColumn;
+            OnlineInventoryColumnTmp = OnlineInventoryColumn;
             BvinColumn = string.Empty;
             ListPriceColumn = 0m;
+
         }
         [DataMember]
         public string BvinColumn { get; set; }
@@ -52,13 +28,19 @@ namespace RaktarKeszletDasHaus.Models
         [DataMember]
         public int OnlineInventoryColumn { get; set; }
         [DataMember]
+        public int OnlineInventoryColumnTmp { get; set; }
+        [DataMember]
         public string ProductNameColumn { get; set; }
         [DataMember]
         public int LocalInventoryColumn { get; set; }
         [DataMember]
+        public int LocalInventoryColumnTmp { get; set; }
+        [DataMember]
         public string SKUColumn { get; set; }
         [DataMember]
         public string CategoryColumn { get; set; }
+        [DataMember]
+        public string CategoryBvinColumn { get; set; }
     }
 
 

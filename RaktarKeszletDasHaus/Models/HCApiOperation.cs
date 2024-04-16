@@ -4,7 +4,7 @@ namespace RaktarKeszletDasHaus.Models
 {
     [DataContract]
     [Serializable]
-    internal class HCApiOperation
+    public class HCApiOperation
     {
         public HCApiOperation()
         {
