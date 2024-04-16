@@ -31,7 +31,7 @@ namespace RaktarKeszletDasHaus.Models
     /// </summary>
     [DataContract]
     [Serializable]
-    internal class HCShippableItem
+    public class HCShippableItem
     {
         public HCShippableItem()
         {

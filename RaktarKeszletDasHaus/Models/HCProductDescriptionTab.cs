@@ -7,7 +7,7 @@ namespace RaktarKeszletDasHaus.Models
     /// </summary>
     [DataContract]
     [Serializable]
-    internal class HCProductDescriptionTab
+    public class HCProductDescriptionTab
     {
 
         public HCProductDescriptionTab()

@@ -4,7 +4,7 @@ namespace RaktarKeszletDasHaus.Models
 {
     [DataContract]
     [Serializable]
-    internal class HCAllCategory
+    public class HCAllCategory
     {
 
 

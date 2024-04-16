@@ -97,7 +97,7 @@ namespace RaktarKeszletDasHaus.Models
     [XmlInclude(typeof(HCProductStatus))]
     [XmlInclude(typeof(HCProductInventoryMode))]
     [XmlInclude(typeof(HCProductDescriptionTab))]
-    internal class HCProduct
+    public class HCProduct
     {
         public HCProduct()
         {

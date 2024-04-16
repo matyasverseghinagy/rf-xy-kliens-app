@@ -28,10 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            listBox1 = new ListBox();
             dataGridView1 = new DataGridView();
-            listBox2 = new ListBox();
             panel1 = new Panel();
             panel2 = new Panel();
             comboBox1 = new ComboBox();
@@ -53,30 +52,19 @@
             label9 = new Label();
             label10 = new Label();
             label11 = new Label();
-            label12 = new Label();
-            label13 = new Label();
-            label14 = new Label();
-            label15 = new Label();
-            label16 = new Label();
+            termekNevL = new Label();
+            kategoriaNevL = new Label();
+            skuNevL = new Label();
+            arNevL = new Label();
+            bvinNevL = new Label();
             panel3 = new Panel();
             panel4 = new Panel();
             label17 = new Label();
+            toolTip1 = new ToolTip(components);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             SuspendLayout();
-            // 
-            // listBox1
-            // 
-            listBox1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            listBox1.FormattingEnabled = true;
-            listBox1.ItemHeight = 15;
-            listBox1.Location = new Point(731, 160);
-            listBox1.Name = "listBox1";
-            listBox1.Size = new Size(229, 349);
-            listBox1.TabIndex = 3;
-            listBox1.Visible = false;
-            listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
             // 
             // dataGridView1
             // 
@@ -85,18 +73,9 @@
             dataGridView1.Margin = new Padding(0);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowTemplate.Height = 25;
-            dataGridView1.Size = new Size(703, 583);
+            dataGridView1.Size = new Size(703, 560);
             dataGridView1.TabIndex = 4;
-            // 
-            // listBox2
-            // 
-            listBox2.FormattingEnabled = true;
-            listBox2.ItemHeight = 15;
-            listBox2.Location = new Point(528, 160);
-            listBox2.Name = "listBox2";
-            listBox2.Size = new Size(295, 349);
-            listBox2.TabIndex = 5;
-            listBox2.Visible = false;
+            dataGridView1.SelectionChanged += dataGridView1_SelectionChanged;
             // 
             // panel1
             // 
@@ -126,6 +105,7 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(233, 23);
             comboBox1.TabIndex = 7;
+            comboBox1.SelectionChangeCommitted += comboBox1_SelectionChangeCommitted;
             // 
             // label1
             // 
@@ -315,75 +295,75 @@
             label11.TabIndex = 25;
             label11.Text = "Bvin:";
             // 
-            // label12
+            // termekNevL
             // 
-            label12.BackColor = Color.Transparent;
-            label12.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label12.ForeColor = Color.White;
-            label12.Location = new Point(371, 9);
-            label12.Name = "label12";
-            label12.Size = new Size(589, 20);
-            label12.TabIndex = 26;
-            label12.Text = "nincs termék kiválasztva";
-            label12.TextAlign = ContentAlignment.TopRight;
+            termekNevL.BackColor = Color.Transparent;
+            termekNevL.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            termekNevL.ForeColor = Color.White;
+            termekNevL.Location = new Point(371, 9);
+            termekNevL.Name = "termekNevL";
+            termekNevL.Size = new Size(589, 20);
+            termekNevL.TabIndex = 26;
+            termekNevL.Text = "nincs termék kiválasztva";
+            termekNevL.TextAlign = ContentAlignment.TopRight;
             // 
-            // label13
+            // kategoriaNevL
             // 
-            label13.BackColor = Color.Transparent;
-            label13.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label13.ForeColor = Color.White;
-            label13.Location = new Point(371, 29);
-            label13.Name = "label13";
-            label13.Size = new Size(589, 20);
-            label13.TabIndex = 27;
-            label13.Text = "nincs termék kiválasztva";
-            label13.TextAlign = ContentAlignment.TopRight;
+            kategoriaNevL.BackColor = Color.Transparent;
+            kategoriaNevL.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            kategoriaNevL.ForeColor = Color.White;
+            kategoriaNevL.Location = new Point(371, 29);
+            kategoriaNevL.Name = "kategoriaNevL";
+            kategoriaNevL.Size = new Size(589, 20);
+            kategoriaNevL.TabIndex = 27;
+            kategoriaNevL.Text = "nincs termék kiválasztva";
+            kategoriaNevL.TextAlign = ContentAlignment.TopRight;
             // 
-            // label14
+            // skuNevL
             // 
-            label14.BackColor = Color.Transparent;
-            label14.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label14.ForeColor = Color.White;
-            label14.Location = new Point(371, 49);
-            label14.Name = "label14";
-            label14.Size = new Size(589, 20);
-            label14.TabIndex = 28;
-            label14.Text = "nincs termék kiválasztva";
-            label14.TextAlign = ContentAlignment.TopRight;
+            skuNevL.BackColor = Color.Transparent;
+            skuNevL.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            skuNevL.ForeColor = Color.White;
+            skuNevL.Location = new Point(371, 49);
+            skuNevL.Name = "skuNevL";
+            skuNevL.Size = new Size(589, 20);
+            skuNevL.TabIndex = 28;
+            skuNevL.Text = "nincs termék kiválasztva";
+            skuNevL.TextAlign = ContentAlignment.TopRight;
             // 
-            // label15
+            // arNevL
             // 
-            label15.BackColor = Color.Transparent;
-            label15.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label15.ForeColor = Color.White;
-            label15.Location = new Point(371, 69);
-            label15.Name = "label15";
-            label15.Size = new Size(589, 20);
-            label15.TabIndex = 29;
-            label15.Text = "nincs termék kiválasztva";
-            label15.TextAlign = ContentAlignment.TopRight;
+            arNevL.BackColor = Color.Transparent;
+            arNevL.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            arNevL.ForeColor = Color.White;
+            arNevL.Location = new Point(371, 69);
+            arNevL.Name = "arNevL";
+            arNevL.Size = new Size(589, 20);
+            arNevL.TabIndex = 29;
+            arNevL.Text = "nincs termék kiválasztva";
+            arNevL.TextAlign = ContentAlignment.TopRight;
             // 
-            // label16
+            // bvinNevL
             // 
-            label16.BackColor = Color.Transparent;
-            label16.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
-            label16.ForeColor = Color.White;
-            label16.Location = new Point(371, 95);
-            label16.Name = "label16";
-            label16.Size = new Size(589, 20);
-            label16.TabIndex = 30;
-            label16.Text = "nincs termék kiválasztva";
-            label16.TextAlign = ContentAlignment.TopRight;
+            bvinNevL.BackColor = Color.Transparent;
+            bvinNevL.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point);
+            bvinNevL.ForeColor = Color.White;
+            bvinNevL.Location = new Point(371, 95);
+            bvinNevL.Name = "bvinNevL";
+            bvinNevL.Size = new Size(589, 20);
+            bvinNevL.TabIndex = 30;
+            bvinNevL.Text = "nincs termék kiválasztva";
+            bvinNevL.TextAlign = ContentAlignment.TopRight;
             // 
             // panel3
             // 
             panel3.BackColor = Color.FromArgb(252, 163, 17);
             panel3.Controls.Add(panel4);
             panel3.Controls.Add(label17);
-            panel3.Location = new Point(0, 682);
+            panel3.Location = new Point(0, 687);
             panel3.Margin = new Padding(0);
             panel3.Name = "panel3";
-            panel3.Size = new Size(269, 28);
+            panel3.Size = new Size(972, 23);
             panel3.TabIndex = 7;
             // 
             // panel4
@@ -391,9 +371,9 @@
             panel4.BackColor = Color.Transparent;
             panel4.BackgroundImage = Properties.Resources.sync;
             panel4.BackgroundImageLayout = ImageLayout.Zoom;
-            panel4.Location = new Point(239, 3);
+            panel4.Location = new Point(949, 3);
             panel4.Name = "panel4";
-            panel4.Size = new Size(27, 22);
+            panel4.Size = new Size(20, 19);
             panel4.TabIndex = 2;
             panel4.MouseClick += panel4_MouseClick;
             // 
@@ -403,11 +383,11 @@
             label17.BackColor = Color.Transparent;
             label17.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point);
             label17.ForeColor = Color.FromArgb(20, 33, 61);
-            label17.Location = new Point(0, 6);
+            label17.Location = new Point(0, 0);
             label17.Name = "label17";
             label17.Size = new Size(111, 17);
             label17.TabIndex = 1;
-            label17.Text = "v0.1 - DasHaus ©";
+            label17.Text = "v0.3 - DasHaus ©";
             label17.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // Form1
@@ -417,11 +397,11 @@
             BackColor = Color.FromArgb(20, 33, 61);
             ClientSize = new Size(972, 710);
             Controls.Add(panel3);
-            Controls.Add(label16);
-            Controls.Add(label15);
-            Controls.Add(label14);
-            Controls.Add(label13);
-            Controls.Add(label12);
+            Controls.Add(bvinNevL);
+            Controls.Add(arNevL);
+            Controls.Add(skuNevL);
+            Controls.Add(kategoriaNevL);
+            Controls.Add(termekNevL);
             Controls.Add(label11);
             Controls.Add(label10);
             Controls.Add(label9);
@@ -442,9 +422,7 @@
             Controls.Add(label1);
             Controls.Add(comboBox1);
             Controls.Add(panel1);
-            Controls.Add(listBox2);
             Controls.Add(dataGridView1);
-            Controls.Add(listBox1);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "Form1";
             Text = "Raktárkészlet nyilvántartás - DasHaus ©";
@@ -458,9 +436,7 @@
         }
 
         #endregion
-        private ListBox listBox1;
         private DataGridView dataGridView1;
-        private ListBox listBox2;
         private Panel panel1;
         private Panel panel2;
         private ComboBox comboBox1;
@@ -482,13 +458,14 @@
         private Label label9;
         private Label label10;
         private Label label11;
-        private Label label12;
-        private Label label13;
-        private Label label14;
-        private Label label15;
-        private Label label16;
+        private Label termekNevL;
+        private Label kategoriaNevL;
+        private Label skuNevL;
+        private Label arNevL;
+        private Label bvinNevL;
         private Panel panel3;
         private Label label17;
         private Panel panel4;
+        private ToolTip toolTip1;
     }
 }

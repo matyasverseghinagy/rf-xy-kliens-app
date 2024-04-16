@@ -2,7 +2,7 @@
 
 namespace RaktarKeszletDasHaus.Models
 {
-    internal class HCCustomProperty
+    public class HCCustomProperty
     {
         public HCCustomProperty()
         {
