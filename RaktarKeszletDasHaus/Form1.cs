@@ -193,6 +193,12 @@ namespace RaktarKeszletDasHaus
             textBox4.Text = tmp.ToString();
         }
 
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+
+            apiDataManager.PostUpdate();
+        }
+
         private void FilterResults()
         {
             selectedCategory = (HCAllCategory)comboBox1.SelectedItem;
@@ -341,5 +347,6 @@ namespace RaktarKeszletDasHaus
 
             selectionAllowed = true;
         }
+
     }
 }

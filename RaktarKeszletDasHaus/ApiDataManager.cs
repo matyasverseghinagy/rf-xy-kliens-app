@@ -4,7 +4,11 @@ using System.Diagnostics;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Security.Policy;
+using System.Text.Json;
+using System.Text;
 using System.Windows.Forms;
+using System.Buffers.Text;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 
 namespace RaktarKeszletDasHaus
@@ -137,8 +141,83 @@ namespace RaktarKeszletDasHaus
             }
         }
 
-        public void PostUpdate()
+        public async void PostUpdate()
         {
+            string productBvin = "0dcf8471-e5d6-420a-88a4-ed3630fb6799";
+            string allProductEndpoint = $"/DesktopModules/Hotcakes/API/rest/v1/products?key={HotCakesAPIKey}";
+            
+            HttpClient hotCakesClient = new HttpClient();
+            hotCakesClient.BaseAddress = new Uri(BaseURL);
+            hotCakesClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            List<HCProduct> tmpContainer = new List<HCProduct>();
+            //string json = JsonSerializer.Serialize(requestData);
+            //HttpContent content = new StringContent(json, Encoding.UTF8, "application/json");
+            //HttpResponseMessage response = await client.PostAsync(url, content);
+            //string responseContent = await response.Content.ReadAsStringAsync();
+            //MessageBox.Show(responseContent);
+            try
+            {
+                // Get all the product
+                var jsonResponse = hotCakesClient.GetFromJsonAsync<HCJSONProductsPagesFinal>(allProductEndpoint).Result;
+
+                if (jsonResponse != null)
+                {
+                    var Content = jsonResponse.Content;
+                    if (Content != null)
+                    {
+                        tmpContainer = Content.Products;
+                    }
+                }
+
+                tmpContainer.Count();
+
+                HCProduct tesztTermek = (from product in tmpContainer
+                                         where product != null && product.Bvin.Equals(productBvin)
+                                         select product).FirstOrDefault();
+                if (tesztTermek != null)
+                {
+                    // Módosítom a teszttermék adatait.
+                    tesztTermek.ProductName = "teszt-termék - 🌏🌏🌏";
+                    tesztTermek.CreationDateUtc = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Utc).ToString();
+                    tesztTermek.ImageFileSmall = "placeholder_correct.png";
+
+                    string picture_name = "placeholder_correct_modified.png";
+
+                    // POST HTTP request
+                    string updateProductEndpoint = $"DesktopModules/Hotcakes/API/rest/v1/products/{tesztTermek.Bvin}?key={HotCakesAPIKey}";
+                    string jsonToSend = JsonSerializer.Serialize(tesztTermek);
+                    HttpContent data = new StringContent(jsonToSend, Encoding.UTF8, "application/json");
+                    HttpResponseMessage response = await hotCakesClient.PostAsync(updateProductEndpoint, data);
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show(responseContent);
+
+                    string uploadImageEndpoint = $"DesktopModules/Hotcakes/API/rest/v1/productimagesupload/{productBvin}/b90ec862-cb8d-456b-ba36-782e7cc151fa?key={HotCakesAPIKey}&filename={picture_name}";
+                    byte[] image = File.ReadAllBytes("C:\\Users\\keres\\Documents\\university\\negyedik_szem\\it_rendszer\\others\\placeholder_correct_modified.png");
+                    string medium_imgbase64json = JsonSerializer.Serialize(image);
+                    //var imgToSend = new ByteArrayContent(medium_img);
+                    //string imgAsJson = JsonSerializer.Serialize(medium_img);
+                    
+                    //            var ser = new JavaScriptSerializer { MaxJsonLength = MAXLENGTH };
+                    //return ser.Serialize(target);
+
+                    //Stream stream = new MemoryStream(medium_img);
+                    data = new StringContent(medium_imgbase64json, Encoding.UTF8, "application/json");
+                    response = await hotCakesClient.PostAsync(uploadImageEndpoint, data);
+                    byte[] responseContentByte = await response.Content.ReadAsByteArrayAsync();
+                    MessageBox.Show(responseContentByte.ToString());
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                FAIL_STATUS = true;
+                hotCakesClient.Dispose();
+                return;
+            }
+
+            hotCakesClient.Dispose();
+
 
         }
 

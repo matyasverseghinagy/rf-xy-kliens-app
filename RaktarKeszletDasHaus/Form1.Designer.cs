@@ -440,6 +440,7 @@
             saveButton.TabIndex = 33;
             saveButton.Text = "Mentés";
             saveButton.UseVisualStyleBackColor = true;
+            saveButton.Click += saveButton_Click;
             // 
             // Form1
             // 

@@ -43,6 +43,23 @@ namespace RaktarKeszletDasHaus.Models
         public string CategoryBvinColumn { get; set; }
     }
 
+    [DataContract]
+    [Serializable]
+    internal class HCJSONProductsAll
+    {
+
+        public HCJSONProductsAll()
+        {
+            Errors = new List<string>();
+            Content = new List<HCProduct>();
+        }
+
+        [DataMember]
+        public List<string> Errors { get; set; }
+        [DataMember]
+        public List<HCProduct> Content { get; set; }
+
+    }
 
     [DataContract]
     [Serializable]
