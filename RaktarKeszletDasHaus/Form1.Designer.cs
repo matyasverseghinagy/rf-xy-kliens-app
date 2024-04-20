@@ -63,6 +63,7 @@
             toolTip1 = new ToolTip(components);
             clear_productname = new Button();
             button1 = new Button();
+            saveButton = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
@@ -169,7 +170,7 @@
             label5.BackColor = Color.Transparent;
             label5.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
             label5.ForeColor = Color.FromArgb(252, 163, 17);
-            label5.Location = new Point(12, 421);
+            label5.Location = new Point(12, 390);
             label5.Name = "label5";
             label5.Size = new Size(142, 32);
             label5.TabIndex = 13;
@@ -177,7 +178,7 @@
             // 
             // textBox3
             // 
-            textBox3.Location = new Point(22, 456);
+            textBox3.Location = new Point(22, 425);
             textBox3.Name = "textBox3";
             textBox3.ReadOnly = true;
             textBox3.Size = new Size(233, 23);
@@ -189,7 +190,7 @@
             label6.BackColor = Color.Transparent;
             label6.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
             label6.ForeColor = Color.FromArgb(252, 163, 17);
-            label6.Location = new Point(12, 542);
+            label6.Location = new Point(12, 511);
             label6.Name = "label6";
             label6.Size = new Size(165, 32);
             label6.TabIndex = 15;
@@ -197,7 +198,7 @@
             // 
             // textBox4
             // 
-            textBox4.Location = new Point(22, 577);
+            textBox4.Location = new Point(22, 546);
             textBox4.Name = "textBox4";
             textBox4.ReadOnly = true;
             textBox4.Size = new Size(233, 23);
@@ -206,7 +207,7 @@
             // localInvSub
             // 
             localInvSub.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            localInvSub.Location = new Point(22, 485);
+            localInvSub.Location = new Point(22, 454);
             localInvSub.Name = "localInvSub";
             localInvSub.Size = new Size(112, 33);
             localInvSub.TabIndex = 17;
@@ -217,7 +218,7 @@
             // localInvAdd
             // 
             localInvAdd.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            localInvAdd.Location = new Point(143, 485);
+            localInvAdd.Location = new Point(143, 454);
             localInvAdd.Name = "localInvAdd";
             localInvAdd.Size = new Size(112, 33);
             localInvAdd.TabIndex = 18;
@@ -228,7 +229,7 @@
             // onlineInvAdd
             // 
             onlineInvAdd.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            onlineInvAdd.Location = new Point(143, 606);
+            onlineInvAdd.Location = new Point(143, 575);
             onlineInvAdd.Name = "onlineInvAdd";
             onlineInvAdd.Size = new Size(112, 33);
             onlineInvAdd.TabIndex = 20;
@@ -239,7 +240,7 @@
             // onlineInvSub
             // 
             onlineInvSub.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            onlineInvSub.Location = new Point(22, 606);
+            onlineInvSub.Location = new Point(22, 575);
             onlineInvSub.Name = "onlineInvSub";
             onlineInvSub.Size = new Size(112, 33);
             onlineInvSub.TabIndex = 19;
@@ -430,12 +431,23 @@
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 
+            // saveButton
+            // 
+            saveButton.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            saveButton.Location = new Point(83, 628);
+            saveButton.Name = "saveButton";
+            saveButton.Size = new Size(112, 33);
+            saveButton.TabIndex = 33;
+            saveButton.Text = "Mentés";
+            saveButton.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(20, 33, 61);
             ClientSize = new Size(972, 710);
+            Controls.Add(saveButton);
             Controls.Add(button1);
             Controls.Add(clear_productname);
             Controls.Add(panel3);
@@ -511,5 +523,6 @@
         private ToolTip toolTip1;
         private Button clear_productname;
         private Button button1;
+        private Button saveButton;
     }
 }

@@ -79,7 +79,8 @@ namespace RaktarKeszletDasHaus
             // Set the start position of the form to the center of the screen.
             StartPosition = FormStartPosition.CenterScreen;
 
-
+            saveButton.BackColor = DasHausWhite;
+            saveButton.ForeColor = DasHausBlack;
         }
 
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
