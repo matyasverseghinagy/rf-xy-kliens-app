@@ -15,20 +15,24 @@ namespace RaktarKeszletDasHaus
         private const string BaseURL = "http://20.234.113.211:8083";
         public List<HCAllCategory> Categories;
         public List<TermekAdatok> Products;
-        public static bool EXIT_STATUS = false;
+        public static bool FAIL_STATUS = false;
         public ApiDataManager()
         {
-            EXIT_STATUS = false;
-            // Getting the category list from HotCakes
-            Categories = new List<HCAllCategory>();
-            Products = new List<TermekAdatok>();
+            
             GetData();
         }
 
         public void GetData()
         {
+            FAIL_STATUS = false;
+            // Getting the category list from HotCakes
+
+            Categories = new List<HCAllCategory>();
+            Products = new List<TermekAdatok>();
             GetCategories();
             GetAllProducts();
+
+            
         }
 
         private void GetAllProducts()
@@ -67,18 +71,20 @@ namespace RaktarKeszletDasHaus
 
                                 Products.Add(tmpTermek);
                             }
-                        }
+                        }            
                     }
                     catch (Exception ex)
                     {
-                        EXIT_STATUS = true;
+                        FAIL_STATUS = true;
                         MessageBox.Show(ex.Message);
+                        hotCakesClient.Dispose();
                         return;
                     }
-
-                    
-
                 }
+            }
+            if (!FAIL_STATUS)
+            {
+                MessageBox.Show("A legfrisebb adatokat használod!", "Adatfrissítés sikeres");
             }
             hotCakesClient.Dispose();
         }
@@ -109,12 +115,13 @@ namespace RaktarKeszletDasHaus
                     }
                 }
 
-
+                
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                EXIT_STATUS = true;
+                FAIL_STATUS = true;
+                hotCakesClient.Dispose();
                 return;
             }
 
@@ -123,7 +130,7 @@ namespace RaktarKeszletDasHaus
             // Manage the category List content -> Delete the parent categories
             for (int i = 0; i < Categories.Count(); i++)
             {
-                if (Categories[i].ParentId == String.Empty && Categories[i].Bvin != "all-cat-0")
+                if (Categories[i].Name.Equals("Háztartási nagygépek") || Categories[i].Name.Equals("Háztartási kisgépek") || Categories[i].Name.Equals("Szórakoztatás"))
                 {
                     Categories.RemoveAt(i);
                 }
