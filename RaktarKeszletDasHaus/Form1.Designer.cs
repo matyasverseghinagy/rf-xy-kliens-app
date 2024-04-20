@@ -43,10 +43,10 @@
             textBox3 = new TextBox();
             label6 = new Label();
             textBox4 = new TextBox();
-            button2 = new Button();
-            button3 = new Button();
-            button4 = new Button();
-            button5 = new Button();
+            localInvSub = new Button();
+            localInvAdd = new Button();
+            onlineInvAdd = new Button();
+            onlineInvSub = new Button();
             label7 = new Label();
             label8 = new Label();
             label9 = new Label();
@@ -61,6 +61,8 @@
             panel4 = new Panel();
             label17 = new Label();
             toolTip1 = new ToolTip(components);
+            clear_productname = new Button();
+            button1 = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
@@ -135,8 +137,10 @@
             // 
             textBox1.Location = new Point(22, 258);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(233, 23);
+            textBox1.PlaceholderText = "Terméknév";
+            textBox1.Size = new Size(217, 23);
             textBox1.TabIndex = 10;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // label3
             // 
@@ -154,8 +158,10 @@
             // 
             textBox2.Location = new Point(22, 332);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(233, 23);
+            textBox2.PlaceholderText = "SKU kód";
+            textBox2.Size = new Size(217, 23);
             textBox2.TabIndex = 12;
+            textBox2.TextChanged += textBox2_TextChanged;
             // 
             // label5
             // 
@@ -173,6 +179,7 @@
             // 
             textBox3.Location = new Point(22, 456);
             textBox3.Name = "textBox3";
+            textBox3.ReadOnly = true;
             textBox3.Size = new Size(233, 23);
             textBox3.TabIndex = 14;
             // 
@@ -192,48 +199,53 @@
             // 
             textBox4.Location = new Point(22, 577);
             textBox4.Name = "textBox4";
+            textBox4.ReadOnly = true;
             textBox4.Size = new Size(233, 23);
             textBox4.TabIndex = 16;
             // 
-            // button2
+            // localInvSub
             // 
-            button2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            button2.Location = new Point(22, 485);
-            button2.Name = "button2";
-            button2.Size = new Size(112, 33);
-            button2.TabIndex = 17;
-            button2.Text = "-";
-            button2.UseVisualStyleBackColor = true;
+            localInvSub.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            localInvSub.Location = new Point(22, 485);
+            localInvSub.Name = "localInvSub";
+            localInvSub.Size = new Size(112, 33);
+            localInvSub.TabIndex = 17;
+            localInvSub.Text = "-";
+            localInvSub.UseVisualStyleBackColor = true;
+            localInvSub.Click += localInvSub_Click;
             // 
-            // button3
+            // localInvAdd
             // 
-            button3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            button3.Location = new Point(143, 485);
-            button3.Name = "button3";
-            button3.Size = new Size(112, 33);
-            button3.TabIndex = 18;
-            button3.Text = "+";
-            button3.UseVisualStyleBackColor = true;
+            localInvAdd.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            localInvAdd.Location = new Point(143, 485);
+            localInvAdd.Name = "localInvAdd";
+            localInvAdd.Size = new Size(112, 33);
+            localInvAdd.TabIndex = 18;
+            localInvAdd.Text = "+";
+            localInvAdd.UseVisualStyleBackColor = true;
+            localInvAdd.Click += localInvAdd_Click;
             // 
-            // button4
+            // onlineInvAdd
             // 
-            button4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            button4.Location = new Point(143, 606);
-            button4.Name = "button4";
-            button4.Size = new Size(112, 33);
-            button4.TabIndex = 20;
-            button4.Text = "+";
-            button4.UseVisualStyleBackColor = true;
+            onlineInvAdd.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            onlineInvAdd.Location = new Point(143, 606);
+            onlineInvAdd.Name = "onlineInvAdd";
+            onlineInvAdd.Size = new Size(112, 33);
+            onlineInvAdd.TabIndex = 20;
+            onlineInvAdd.Text = "+";
+            onlineInvAdd.UseVisualStyleBackColor = true;
+            onlineInvAdd.Click += onlineInvAdd_Click;
             // 
-            // button5
+            // onlineInvSub
             // 
-            button5.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            button5.Location = new Point(22, 606);
-            button5.Name = "button5";
-            button5.Size = new Size(112, 33);
-            button5.TabIndex = 19;
-            button5.Text = "-";
-            button5.UseVisualStyleBackColor = true;
+            onlineInvSub.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
+            onlineInvSub.Location = new Point(22, 606);
+            onlineInvSub.Name = "onlineInvSub";
+            onlineInvSub.Size = new Size(112, 33);
+            onlineInvSub.TabIndex = 19;
+            onlineInvSub.Text = "-";
+            onlineInvSub.UseVisualStyleBackColor = true;
+            onlineInvSub.Click += onlineInvSub_Click;
             // 
             // label7
             // 
@@ -387,8 +399,36 @@
             label17.Name = "label17";
             label17.Size = new Size(111, 17);
             label17.TabIndex = 1;
-            label17.Text = "v0.3 - DasHaus ©";
+            label17.Text = "v0.4 - DasHaus ©";
             label17.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // clear_productname
+            // 
+            clear_productname.BackColor = Color.White;
+            clear_productname.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            clear_productname.ForeColor = Color.Black;
+            clear_productname.Location = new Point(242, 258);
+            clear_productname.Margin = new Padding(0);
+            clear_productname.Name = "clear_productname";
+            clear_productname.Size = new Size(24, 24);
+            clear_productname.TabIndex = 31;
+            clear_productname.Text = "X";
+            clear_productname.UseVisualStyleBackColor = false;
+            clear_productname.Click += clear_productname_Click;
+            // 
+            // button1
+            // 
+            button1.BackColor = Color.White;
+            button1.Font = new Font("Segoe UI Black", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            button1.ForeColor = Color.Black;
+            button1.Location = new Point(242, 332);
+            button1.Margin = new Padding(0);
+            button1.Name = "button1";
+            button1.Size = new Size(24, 24);
+            button1.TabIndex = 32;
+            button1.Text = "X";
+            button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // Form1
             // 
@@ -396,6 +436,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(20, 33, 61);
             ClientSize = new Size(972, 710);
+            Controls.Add(button1);
+            Controls.Add(clear_productname);
             Controls.Add(panel3);
             Controls.Add(bvinNevL);
             Controls.Add(arNevL);
@@ -407,10 +449,10 @@
             Controls.Add(label9);
             Controls.Add(label8);
             Controls.Add(label7);
-            Controls.Add(button4);
-            Controls.Add(button5);
-            Controls.Add(button3);
-            Controls.Add(button2);
+            Controls.Add(onlineInvAdd);
+            Controls.Add(onlineInvSub);
+            Controls.Add(localInvAdd);
+            Controls.Add(localInvSub);
             Controls.Add(textBox4);
             Controls.Add(label6);
             Controls.Add(textBox3);
@@ -449,10 +491,10 @@
         private TextBox textBox3;
         private Label label6;
         private TextBox textBox4;
-        private Button button2;
-        private Button button3;
-        private Button button4;
-        private Button button5;
+        private Button localInvSub;
+        private Button localInvAdd;
+        private Button onlineInvAdd;
+        private Button onlineInvSub;
         private Label label7;
         private Label label8;
         private Label label9;
@@ -467,5 +509,7 @@
         private Label label17;
         private Panel panel4;
         private ToolTip toolTip1;
+        private Button clear_productname;
+        private Button button1;
     }
 }
