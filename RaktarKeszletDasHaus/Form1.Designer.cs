@@ -400,7 +400,7 @@
             label17.Name = "label17";
             label17.Size = new Size(111, 17);
             label17.TabIndex = 1;
-            label17.Text = "v1.0 - DasHaus ©";
+            label17.Text = "v1.1 - DasHaus ©";
             label17.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // clear_productname

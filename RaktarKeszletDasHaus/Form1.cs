@@ -1,5 +1,4 @@
 using RaktarKeszletDasHaus.Models;
-using System.Diagnostics;
 
 
 
@@ -32,7 +31,7 @@ namespace RaktarKeszletDasHaus
         {
             InitializeComponent();
 
-            // Defining data containers
+            // Adat konténerek definiálása
             apiDataManager = new ApiDataManager();
             TermekekListaDataSource = new List<TermekAdatok>();
             OriginalTermekLista = new List<TermekAdatok>();
@@ -40,23 +39,23 @@ namespace RaktarKeszletDasHaus
             selectedCategory = new HCAllCategory();
             selectedTermek = new TermekAdatok();
 
-            // Initiating the data
+            // Kezdeti terméklista definiálása
             this.categories = apiDataManager.Categories;
             this.OriginalTermekLista = apiDataManager.Products.ToList();
             this.TermekekListaDataSource = OriginalTermekLista.ToList();
 
-            // Setting up the category combobox
+            // Kategóriák beállítása
             comboBox1.DataSource = categories;
             comboBox1.ValueMember = "Bvin";
             comboBox1.DisplayMember = "Name";
             comboBox1.SelectedIndex = 0;
 
-            // Setting up the bindingsource of the dgv
+            // A táblázat adatbekötése és feltöltése
             DGBindigSource = new BindingSource();
             DGBindigSource.DataSource = TermekekListaDataSource;
             dataGridView1.DataSource = DGBindigSource;
 
-            // Setting up the layout of the datagridview table
+            // A táblázat megjelenésének beállítása
             SetDataGridView();
 
 
@@ -83,12 +82,13 @@ namespace RaktarKeszletDasHaus
 
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            // Kategória választásál terméklistázás a táblázatban
             FilterResults();
         }
 
         private void panel4_MouseClick(object sender, MouseEventArgs e)
         {
-            // Data refresh
+            // Az adatok teljes újratöltése a kliensappba & inicializálása a formnak
             apiDataManager.GetData();
 
             this.categories = apiDataManager.Categories.ToList();
@@ -100,14 +100,19 @@ namespace RaktarKeszletDasHaus
             comboBox1.DisplayMember = "Name";
             comboBox1.SelectedIndex = 0;
 
+            textBox1.Clear();
+            textBox2.Clear();
+
+            // Táblázat feltöltése adatokkal
             DGBindigSource.DataSource = TermekekListaDataSource;
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            // Update the product information
+            // A táblázat egyik sorának kiválasztásakor lefutó kód
             if (selectionAllowed && (DataGridViewRow)dataGridView1.CurrentRow != null)
             {
+                // Felsõ egyedi termékadatok sáv frissítése & tooltippek hozzáadása
                 DataGridViewRow tmp = (DataGridViewRow)dataGridView1.CurrentRow;
                 selectedTermek.SKUColumn = tmp.Cells["SKUColumn"].Value.ToString();
                 selectedTermek.BvinColumn = tmp.Cells["BvinColumn"].Value.ToString();
@@ -126,36 +131,36 @@ namespace RaktarKeszletDasHaus
                 bvinNevL.Text = selectedTermek.BvinColumn;
                 toolTip1.SetToolTip(bvinNevL, bvinNevL.Text);
 
-                // Setting the value to the local inventory modifier textbox
+                // Készlet módosító mezõk feltöltése (online/bolti)
                 tmp.Cells["LocalInventoryColumnTmp"].Value = tmp.Cells["LocalInventoryColumn"].Value;
                 textBox3.Text = tmp.Cells["LocalInventoryColumnTmp"].Value.ToString();
-
-                // Setting the value to the online inventory modifier textbox
                 tmp.Cells["OnlineInventoryColumnTmp"].Value = tmp.Cells["OnlineInventoryColumn"].Value;
                 textBox4.Text = tmp.Cells["OnlineInventoryColumnTmp"].Value.ToString();
-
-                Trace.WriteLine(tmp.Cells["OnlineInventoryBvinColumn"].Value);
             }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+            // Terméklista frissítés szövegváltozáskor
             FilterResults();
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
+            // Terméklista frissítés szövegváltozáskor
             FilterResults();
         }
 
         public void clear_productname_Click(object sender, EventArgs e)
         {
+            // Terméknév mezõinek törlése majd terméklistfrissítés
             textBox1.Clear();
             FilterResults();
         }
 
         public void button1_Click(object sender, EventArgs e)
         {
+            // SKU szöveg mezõ tartalmának törlése majd terméklistafrissítés
             textBox2.Clear();
             FilterResults();
         }
@@ -208,46 +213,52 @@ namespace RaktarKeszletDasHaus
 
         private async void saveButton_Click(object sender, EventArgs e)
         {
-            //apiDataManager.PostUpdate();
-            if (selectionAllowed && (DataGridViewRow)dataGridView1.CurrentRow != null)
+
+            if (selectionAllowed && (TermekAdatok)dataGridView1.CurrentRow.DataBoundItem != null)
             {
-                DataGridViewRow tmpRow = (DataGridViewRow)dataGridView1.CurrentRow;
-                Trace.WriteLine("Local: " + tmpRow.Cells["LocalInventoryColumnTmp"].Value);
-                Trace.WriteLine("Online: " + tmpRow.Cells["OnlineInventoryColumnTmp"].Value);
+                // A Készlet módosítás elmentése POST utasítással
+                TermekAdatok tmpRow = (TermekAdatok)dataGridView1.CurrentRow.DataBoundItem;
+                int localInvNew = tmpRow.LocalInventoryColumnTmp;
+                int localInvOld = tmpRow.LocalInventoryColumn;
+                int onlineInvNew = tmpRow.OnlineInventoryColumnTmp;
+                int onlineInvOld = tmpRow.OnlineInventoryColumn;
+                string? termekName = tmpRow.ProductNameColumn;
+                string? termekSKU = tmpRow.SKUColumn;
+                string? invBvin = tmpRow.OnlineInventoryBvinColumn;
+                string? productBvin = tmpRow.BvinColumn;
 
-                int localInvNew = Convert.ToInt32(tmpRow.Cells["LocalInventoryColumnTmp"].Value);
-                int localInvOld = Convert.ToInt32(tmpRow.Cells["LocalInventoryColumn"].Value);
-                int onlineInvNew = Convert.ToInt32(tmpRow.Cells["OnlineInventoryColumnTmp"].Value);
-                int onlineInvOld = Convert.ToInt32(tmpRow.Cells["OnlineInventoryColumn"].Value);
-                string invBvin = tmpRow.Cells["OnlineInventoryBvinColumn"].Value.ToString();
-                string productBvin = tmpRow.Cells["BvinColumn"].Value.ToString();
+                DialogResult confirmResult = MessageBox.Show(
+                    $"Biztos szeretnéd módosítani az alábbi Készletet:\n\nNév: {termekName}\nSKU: {termekSKU}\n\nRégi Bolti készlet: {localInvOld}\nÚJ Bolti készlet: {localInvNew}\nRégi Online készlet: {onlineInvOld}\nÚJ Online készlet: {onlineInvNew}",
+                    "Biztos szeretnél Módosításokat végezni?",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                );
 
+                if (confirmResult == DialogResult.Yes)
+                {
+                    // Készlet Módosítás véghezvitele
+                    await apiDataManager.PostInventoryUpdate(productBvin, invBvin, localInvNew, localInvOld, onlineInvNew, onlineInvOld);
+                    TermekAdatok tmp = apiDataManager.GetOneProductData((TermekAdatok)dataGridView1.CurrentRow.DataBoundItem);
 
-                await apiDataManager.PostInventoryUpdate(productBvin, invBvin, localInvNew, localInvOld, onlineInvNew, onlineInvOld);
+                    var originalItems = this.OriginalTermekLista.FirstOrDefault(r => r.BvinColumn == tmp.BvinColumn);
+                    originalItems = tmp;
+                    var termekDatasrc = this.TermekekListaDataSource.FirstOrDefault(r => r.BvinColumn == tmp.BvinColumn);
+                    termekDatasrc = tmp;
 
-                apiDataManager.GetData();
-
-                this.categories = apiDataManager.Categories.ToList();
-                this.OriginalTermekLista = apiDataManager.Products.ToList();
-                this.TermekekListaDataSource = OriginalTermekLista.ToList();
-
-                comboBox1.DataSource = categories;
-                comboBox1.ValueMember = "Bvin";
-                comboBox1.DisplayMember = "Name";
-                comboBox1.SelectedIndex = 0;
-
-                DGBindigSource.DataSource = TermekekListaDataSource;
-
+                    DGBindigSource.DataSource = TermekekListaDataSource;
+                    dataGridView1.Refresh();
+                }
             }
         }
 
         private void FilterResults()
         {
+            // Form komponensek adatainak begyûjtése
             selectedCategory = (HCAllCategory)comboBox1.SelectedItem;
             selectedTermekName = textBox1.Text;
             selectedTermekSKU = textBox2.Text;
 
-            // 1. Minden_textbox_�res
+            // 1. Minden_textbox_üres
             if (selectedTermekName.Equals(string.Empty) && selectedTermekSKU.Equals(string.Empty))
             {
                 // Filter for all categories
@@ -265,7 +276,7 @@ namespace RaktarKeszletDasHaus
                     TermekekListaDataSource = searchResult;
                 }
             }
-            // 2. A termeknev nem �res, skun�v �res
+            // 2. A termeknev nem üres, skunév üres
             else if (!selectedTermekName.Equals(string.Empty) && selectedTermekSKU.Equals(string.Empty))
             {
                 // Filter for all categories
@@ -284,7 +295,7 @@ namespace RaktarKeszletDasHaus
                     TermekekListaDataSource = searchResult;
                 }
             }
-            // 3. A termeknev �res, skun�v nem �res
+            // 3. A termeknev üres, skunév nem üres
             else if (selectedTermekName.Equals(string.Empty) && !selectedTermekSKU.Equals(string.Empty))
             {
                 // Filter for all categories
@@ -303,7 +314,7 @@ namespace RaktarKeszletDasHaus
                     TermekekListaDataSource = searchResult;
                 }
             }
-            // 4. A termeknev nem �res, skun�v nem �res
+            // 4. A termeknev nem üres, skunév nem üres
             else if (!selectedTermekName.Equals(string.Empty) && !selectedTermekSKU.Equals(string.Empty))
             {
                 // Filter for all categories
@@ -322,13 +333,35 @@ namespace RaktarKeszletDasHaus
                     TermekekListaDataSource = searchResult;
                 }
             }
+
+            // Ha nincs kiválasztva semmi a Táblázatból -> a címek jelzik + letiltom az input gombokat
+            if (TermekekListaDataSource.Count <= 0)
+            {
+                ClearSelectedProductData();
+                localInvAdd.Enabled = false;
+                localInvSub.Enabled = false;
+                onlineInvAdd.Enabled = false;
+                onlineInvSub.Enabled = false;
+                saveButton.Enabled = false;
+            }
+            else
+            {
+                localInvAdd.Enabled = true;
+                localInvSub.Enabled = true;
+                onlineInvAdd.Enabled = true;
+                onlineInvSub.Enabled = true;
+                saveButton.Enabled = true;
+            }
+
+            // A friss termékszûrés hozzárendelése a datagridview-hoz
             DGBindigSource.DataSource = TermekekListaDataSource;
+
         }
 
         private void SetDataGridView()
         {
 
-            //Adatt�bla M�dos�t�sa
+            //Adattábla Módosítása és beállítása
             dataGridView1.BackgroundColor = DasHausWhite;
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.MultiSelect = false;
@@ -356,19 +389,19 @@ namespace RaktarKeszletDasHaus
             int dgw = dataGridView1.Width;
 
             dataGridView1.Columns["CategoryColumn"].DisplayIndex = 0;
-            dataGridView1.Columns["CategoryColumn"].HeaderText = "Kateg�ria";
+            dataGridView1.Columns["CategoryColumn"].HeaderText = "Kategória";
             dataGridView1.Columns["CategoryColumn"].Width = Convert.ToInt32(dgw * 0.17);
             dataGridView1.Columns["SKUColumn"].DisplayIndex = 1;
             dataGridView1.Columns["SKUColumn"].HeaderText = "SKU";
             dataGridView1.Columns["SKUColumn"].Width = Convert.ToInt32(dgw * 0.15);
             dataGridView1.Columns["ProductNameColumn"].DisplayIndex = 2;
-            dataGridView1.Columns["ProductNameColumn"].HeaderText = "Term�kn�v";
+            dataGridView1.Columns["ProductNameColumn"].HeaderText = "Terméknév";
             dataGridView1.Columns["ProductNameColumn"].Width = Convert.ToInt32(dgw * 0.48);
             dataGridView1.Columns["LocalInventoryColumn"].DisplayIndex = 3;
-            dataGridView1.Columns["LocalInventoryColumn"].HeaderText = "Bolti k�szlet";
+            dataGridView1.Columns["LocalInventoryColumn"].HeaderText = "Bolti készlet";
             dataGridView1.Columns["LocalInventoryColumn"].Width = Convert.ToInt32(dgw * 0.10);
             dataGridView1.Columns["OnlineInventoryColumn"].DisplayIndex = 4;
-            dataGridView1.Columns["OnlineInventoryColumn"].HeaderText = "Online k�szlet";
+            dataGridView1.Columns["OnlineInventoryColumn"].HeaderText = "Online készlet";
             dataGridView1.Columns["OnlineInventoryColumn"].Width = Convert.ToInt32(dgw * 0.10);
             dataGridView1.Columns["BvinColumn"].Visible = false;
             dataGridView1.Columns["BvinColumn"].DisplayIndex = 5;
@@ -391,6 +424,23 @@ namespace RaktarKeszletDasHaus
             }
 
             selectionAllowed = true;
+        }
+
+        private void ClearSelectedProductData()
+        {
+            // Forms komponensek alaphelyzetbe állítása 
+            termekNevL.Text = "nincs termék kiválasztva";
+            toolTip1.SetToolTip(termekNevL, termekNevL.Text);
+            skuNevL.Text = "nincs termék kiválasztva";
+            toolTip1.SetToolTip(skuNevL, skuNevL.Text);
+            kategoriaNevL.Text = "nincs termék kiválasztva";
+            toolTip1.SetToolTip(kategoriaNevL, kategoriaNevL.Text);
+            arNevL.Text = "nincs termék kiválasztva";
+            toolTip1.SetToolTip(arNevL, arNevL.Text);
+            bvinNevL.Text = "nincs termék kiválasztva";
+            toolTip1.SetToolTip(bvinNevL, bvinNevL.Text);
+            textBox3.Text = string.Empty;
+            textBox4.Text = string.Empty;
         }
 
     }
