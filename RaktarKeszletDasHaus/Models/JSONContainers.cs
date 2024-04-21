@@ -3,6 +3,7 @@
 namespace RaktarKeszletDasHaus.Models
 {
 
+
     [DataContract]
     [Serializable]
     public class TermekAdatok
@@ -15,6 +16,7 @@ namespace RaktarKeszletDasHaus.Models
             ProductNameColumn = string.Empty;
             LocalInventoryColumn = 0;
             OnlineInventoryColumn = 0;
+            OnlineInventoryBvinColumn = string.Empty;
             LocalInventoryColumnTmp = LocalInventoryColumn;
             OnlineInventoryColumnTmp = OnlineInventoryColumn;
             BvinColumn = string.Empty;
@@ -31,6 +33,8 @@ namespace RaktarKeszletDasHaus.Models
         public int OnlineInventoryColumnTmp { get; set; }
         [DataMember]
         public string ProductNameColumn { get; set; }
+        [DataMember]
+        public string OnlineInventoryBvinColumn { get; set; }
         [DataMember]
         public int LocalInventoryColumn { get; set; }
         [DataMember]
@@ -63,6 +67,61 @@ namespace RaktarKeszletDasHaus.Models
 
     [DataContract]
     [Serializable]
+    internal class HCJSONProductsOne
+    {
+
+        public HCJSONProductsOne()
+        {
+            Errors = new List<string>();
+            Content = new HCProduct();
+        }
+
+        [DataMember]
+        public List<string> Errors { get; set; }
+        [DataMember]
+        public HCProduct Content { get; set; }
+
+    }
+
+    [DataContract]
+    [Serializable]
+    internal class HCJSONInventories
+    {
+
+        public HCJSONInventories()
+        {
+            Errors = new List<string>();
+            Content = new List<HCInventory>();
+        }
+
+        [DataMember]
+        public List<string> Errors { get; set; }
+        [DataMember]
+        public List<HCInventory> Content { get; set; }
+
+    }
+
+    [DataContract]
+    [Serializable]
+    internal class HCJSONInventoriesOne
+    {
+
+        public HCJSONInventoriesOne()
+        {
+            Errors = new List<string>();
+            Content = new HCInventory();
+        }
+
+        [DataMember]
+        public List<string> Errors { get; set; }
+        [DataMember]
+        public HCInventory Content { get; set; }
+
+    }
+
+
+    [DataContract]
+    [Serializable]
     internal class HCJSONProductsPagesFinal
     {
 
@@ -73,7 +132,7 @@ namespace RaktarKeszletDasHaus.Models
         }
 
         [DataMember]
-        public List<String> Errors { get; set; }
+        public List<string> Errors { get; set; }
         [DataMember]
         public HCJSONProductsPage Content { get; set; }
 

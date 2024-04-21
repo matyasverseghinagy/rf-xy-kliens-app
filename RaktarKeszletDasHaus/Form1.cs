@@ -1,7 +1,5 @@
 using RaktarKeszletDasHaus.Models;
 using System.Diagnostics;
-using System.Net.Http.Headers;
-using System.Net.Http.Json;
 
 
 
@@ -129,11 +127,14 @@ namespace RaktarKeszletDasHaus
                 toolTip1.SetToolTip(bvinNevL, bvinNevL.Text);
 
                 // Setting the value to the local inventory modifier textbox
+                tmp.Cells["LocalInventoryColumnTmp"].Value = tmp.Cells["LocalInventoryColumn"].Value;
                 textBox3.Text = tmp.Cells["LocalInventoryColumnTmp"].Value.ToString();
 
-
                 // Setting the value to the online inventory modifier textbox
+                tmp.Cells["OnlineInventoryColumnTmp"].Value = tmp.Cells["OnlineInventoryColumn"].Value;
                 textBox4.Text = tmp.Cells["OnlineInventoryColumnTmp"].Value.ToString();
+
+                Trace.WriteLine(tmp.Cells["OnlineInventoryBvinColumn"].Value);
             }
         }
 
@@ -164,6 +165,9 @@ namespace RaktarKeszletDasHaus
             int tmp = Convert.ToInt32(textBox3.Text.ToString());
             tmp += 1;
             textBox3.Text = tmp.ToString();
+
+            DataGridViewRow tmpRow = (DataGridViewRow)dataGridView1.CurrentRow;
+            tmpRow.Cells["LocalInventoryColumnTmp"].Value = tmp.ToString();
         }
 
         private void localInvSub_Click(object sender, EventArgs e)
@@ -174,6 +178,9 @@ namespace RaktarKeszletDasHaus
                 tmp -= 1;
             }
             textBox3.Text = tmp.ToString();
+
+            DataGridViewRow tmpRow = (DataGridViewRow)dataGridView1.CurrentRow;
+            tmpRow.Cells["LocalInventoryColumnTmp"].Value = tmp.ToString();
         }
 
         private void onlineInvAdd_Click(object sender, EventArgs e)
@@ -181,6 +188,9 @@ namespace RaktarKeszletDasHaus
             int tmp = Convert.ToInt32(textBox4.Text.ToString());
             tmp += 1;
             textBox4.Text = tmp.ToString();
+
+            DataGridViewRow tmpRow = (DataGridViewRow)dataGridView1.CurrentRow;
+            tmpRow.Cells["OnlineInventoryColumnTmp"].Value = tmp.ToString();
         }
 
         private void onlineInvSub_Click(object sender, EventArgs e)
@@ -191,12 +201,44 @@ namespace RaktarKeszletDasHaus
                 tmp -= 1;
             }
             textBox4.Text = tmp.ToString();
+
+            DataGridViewRow tmpRow = (DataGridViewRow)dataGridView1.CurrentRow;
+            tmpRow.Cells["OnlineInventoryColumnTmp"].Value = tmp.ToString();
         }
 
-        private void saveButton_Click(object sender, EventArgs e)
+        private async void saveButton_Click(object sender, EventArgs e)
         {
+            //apiDataManager.PostUpdate();
+            if (selectionAllowed && (DataGridViewRow)dataGridView1.CurrentRow != null)
+            {
+                DataGridViewRow tmpRow = (DataGridViewRow)dataGridView1.CurrentRow;
+                Trace.WriteLine("Local: " + tmpRow.Cells["LocalInventoryColumnTmp"].Value);
+                Trace.WriteLine("Online: " + tmpRow.Cells["OnlineInventoryColumnTmp"].Value);
 
-            apiDataManager.PostUpdate();
+                int localInvNew = Convert.ToInt32(tmpRow.Cells["LocalInventoryColumnTmp"].Value);
+                int localInvOld = Convert.ToInt32(tmpRow.Cells["LocalInventoryColumn"].Value);
+                int onlineInvNew = Convert.ToInt32(tmpRow.Cells["OnlineInventoryColumnTmp"].Value);
+                int onlineInvOld = Convert.ToInt32(tmpRow.Cells["OnlineInventoryColumn"].Value);
+                string invBvin = tmpRow.Cells["OnlineInventoryBvinColumn"].Value.ToString();
+                string productBvin = tmpRow.Cells["BvinColumn"].Value.ToString();
+
+
+                await apiDataManager.PostInventoryUpdate(productBvin, invBvin, localInvNew, localInvOld, onlineInvNew, onlineInvOld);
+                
+                apiDataManager.GetData();
+
+                this.categories = apiDataManager.Categories.ToList();
+                this.OriginalTermekLista = apiDataManager.Products.ToList();
+                this.TermekekListaDataSource = OriginalTermekLista.ToList();
+
+                comboBox1.DataSource = categories;
+                comboBox1.ValueMember = "Bvin";
+                comboBox1.DisplayMember = "Name";
+                comboBox1.SelectedIndex = 0;
+
+                DGBindigSource.DataSource = TermekekListaDataSource;
+
+            }
         }
 
         private void FilterResults()
@@ -311,7 +353,7 @@ namespace RaktarKeszletDasHaus
             dataGridView1.ColumnHeadersBorderStyle = DataGridViewHeaderBorderStyle.None;
             dataGridView1.GridColor = DasHausGrey;
 
-            int dgw = dataGridView1.Width - 20 + 20;
+            int dgw = dataGridView1.Width;
 
             dataGridView1.Columns["CategoryColumn"].DisplayIndex = 0;
             dataGridView1.Columns["CategoryColumn"].HeaderText = "Kategória";
@@ -337,7 +379,10 @@ namespace RaktarKeszletDasHaus
             dataGridView1.Columns["OnlineInventoryColumnTmp"].Visible = false;
             dataGridView1.Columns["OnlineInventoryColumnTmp"].DisplayIndex = 8;
             dataGridView1.Columns["CategoryBvinColumn"].Visible = false;
-            dataGridView1.Columns["CategoryBvinColumn"].DisplayIndex = 8;
+            dataGridView1.Columns["CategoryBvinColumn"].DisplayIndex = 9;
+            dataGridView1.Columns["OnlineInventoryBvinColumn"].Visible = false;
+            dataGridView1.Columns["OnlineInventoryBvinColumn"].DisplayIndex = 10;
+
 
             for (int i = 0; i < dataGridView1.Columns.Count; i++)
             {
