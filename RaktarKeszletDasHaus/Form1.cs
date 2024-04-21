@@ -16,7 +16,7 @@ namespace RaktarKeszletDasHaus
         private List<HCAllCategory> categories;
         private List<TermekAdatok> TermekekListaDataSource;
         private List<TermekAdatok> OriginalTermekLista;
-        private BindingSource DGBindigSource;
+        public BindingSource DGBindigSource;
         private bool selectionAllowed = false;
         private ApiDataManager apiDataManager;
 
@@ -31,7 +31,7 @@ namespace RaktarKeszletDasHaus
         {
             InitializeComponent();
 
-            // Adat kontÈnerek defini·l·sa
+            // Adat kont√©nerek defini√°l√°sa
             apiDataManager = new ApiDataManager();
             TermekekListaDataSource = new List<TermekAdatok>();
             OriginalTermekLista = new List<TermekAdatok>();
@@ -39,23 +39,23 @@ namespace RaktarKeszletDasHaus
             selectedCategory = new HCAllCategory();
             selectedTermek = new TermekAdatok();
 
-            // Kezdeti termÈklista defini·l·sa
+            // Kezdeti term√©klista defini√°l√°sa
             this.categories = apiDataManager.Categories;
             this.OriginalTermekLista = apiDataManager.Products.ToList();
             this.TermekekListaDataSource = OriginalTermekLista.ToList();
 
-            // KategÛri·k be·llÌt·sa
+            // Kateg√≥ri√°k be√°ll√≠t√°sa
             comboBox1.DataSource = categories;
             comboBox1.ValueMember = "Bvin";
             comboBox1.DisplayMember = "Name";
             comboBox1.SelectedIndex = 0;
 
-            // A t·bl·zat adatbekˆtÈse Ès feltˆltÈse
+            // A t√°bl√°zat adatbek√∂t√©se √©s felt√∂lt√©se
             DGBindigSource = new BindingSource();
             DGBindigSource.DataSource = TermekekListaDataSource;
             dataGridView1.DataSource = DGBindigSource;
 
-            // A t·bl·zat megjelenÈsÈnek be·llÌt·sa
+            // A t√°bl√°zat megjelen√©s√©nek be√°ll√≠t√°sa
             SetDataGridView();
 
 
@@ -82,13 +82,13 @@ namespace RaktarKeszletDasHaus
 
         private void comboBox1_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            // KategÛria v·laszt·s·l termÈklist·z·s a t·bl·zatban
+            // Kateg√≥ria v√°laszt√°s√°l term√©klist√°z√°s a t√°bl√°zatban
             FilterResults();
         }
 
         private void panel4_MouseClick(object sender, MouseEventArgs e)
         {
-            // Az adatok teljes ˙jratˆltÈse a kliensappba & inicializ·l·sa a formnak
+            // Az adatok teljes √∫jrat√∂lt√©se a kliensappba & inicializ√°l√°sa a formnak
             apiDataManager.GetData();
 
             this.categories = apiDataManager.Categories.ToList();
@@ -103,16 +103,16 @@ namespace RaktarKeszletDasHaus
             textBox1.Clear();
             textBox2.Clear();
 
-            // T·bl·zat feltˆltÈse adatokkal
+            // T√°bl√°zat felt√∂lt√©se adatokkal
             DGBindigSource.DataSource = TermekekListaDataSource;
         }
 
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            // A t·bl·zat egyik sor·nak kiv·laszt·sakor lefutÛ kÛd
+            // A t√°bl√°zat egyik sor√°nak kiv√°laszt√°sakor lefut√≥ k√≥d
             if (selectionAllowed && (DataGridViewRow)dataGridView1.CurrentRow != null)
             {
-                // Felsı egyedi termÈkadatok s·v frissÌtÈse & tooltippek hozz·ad·sa
+                // Fels√µ egyedi term√©kadatok s√°v friss√≠t√©se & tooltippek hozz√°ad√°sa
                 DataGridViewRow tmp = (DataGridViewRow)dataGridView1.CurrentRow;
                 selectedTermek.SKUColumn = tmp.Cells["SKUColumn"].Value.ToString();
                 selectedTermek.BvinColumn = tmp.Cells["BvinColumn"].Value.ToString();
@@ -131,7 +131,7 @@ namespace RaktarKeszletDasHaus
                 bvinNevL.Text = selectedTermek.BvinColumn;
                 toolTip1.SetToolTip(bvinNevL, bvinNevL.Text);
 
-                // KÈszlet mÛdosÌtÛ mezık feltˆltÈse (online/bolti)
+                // K√©szlet m√≥dos√≠t√≥ mez√µk felt√∂lt√©se (online/bolti)
                 tmp.Cells["LocalInventoryColumnTmp"].Value = tmp.Cells["LocalInventoryColumn"].Value;
                 textBox3.Text = tmp.Cells["LocalInventoryColumnTmp"].Value.ToString();
                 tmp.Cells["OnlineInventoryColumnTmp"].Value = tmp.Cells["OnlineInventoryColumn"].Value;
@@ -141,31 +141,31 @@ namespace RaktarKeszletDasHaus
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            // TermÈklista frissÌtÈs szˆvegv·ltoz·skor
+            // Term√©klista friss√≠t√©s sz√∂vegv√°ltoz√°skor
             FilterResults();
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            // TermÈklista frissÌtÈs szˆvegv·ltoz·skor
+            // Term√©klista friss√≠t√©s sz√∂vegv√°ltoz√°skor
             FilterResults();
         }
 
-        private void clear_productname_Click(object sender, EventArgs e)
+        public void clear_productname_Click(object sender, EventArgs e)
         {
-            // TermÈknÈv mezıinek tˆrlÈse majd termÈklistfrissÌtÈs
+            // Term√©kn√©v mez√µinek t√∂rl√©se majd term√©klistfriss√≠t√©s
             textBox1.Clear();
             FilterResults();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void button1_Click(object sender, EventArgs e)
         {
-            // SKU szˆveg mezı tartalm·nak tˆrlÈse majd termÈklistafrissÌtÈs
+            // SKU sz√∂veg mez√µ tartalm√°nak t√∂rl√©se majd term√©klistafriss√≠t√©s
             textBox2.Clear();
             FilterResults();
         }
 
-        private void localInvAdd_Click(object sender, EventArgs e)
+        public void localInvAdd_Click(object sender, EventArgs e)
         {
             int tmp = Convert.ToInt32(textBox3.Text.ToString());
             tmp += 1;
@@ -175,7 +175,7 @@ namespace RaktarKeszletDasHaus
             tmpRow.Cells["LocalInventoryColumnTmp"].Value = tmp.ToString();
         }
 
-        private void localInvSub_Click(object sender, EventArgs e)
+        public void localInvSub_Click(object sender, EventArgs e)
         {
             int tmp = Convert.ToInt32(textBox3.Text.ToString());
             if (tmp > 0)
@@ -188,7 +188,7 @@ namespace RaktarKeszletDasHaus
             tmpRow.Cells["LocalInventoryColumnTmp"].Value = tmp.ToString();
         }
 
-        private void onlineInvAdd_Click(object sender, EventArgs e)
+        public void onlineInvAdd_Click(object sender, EventArgs e)
         {
             int tmp = Convert.ToInt32(textBox4.Text.ToString());
             tmp += 1;
@@ -198,7 +198,7 @@ namespace RaktarKeszletDasHaus
             tmpRow.Cells["OnlineInventoryColumnTmp"].Value = tmp.ToString();
         }
 
-        private void onlineInvSub_Click(object sender, EventArgs e)
+        public void onlineInvSub_Click(object sender, EventArgs e)
         {
             int tmp = Convert.ToInt32(textBox4.Text.ToString());
             if (tmp > 0)
@@ -216,7 +216,7 @@ namespace RaktarKeszletDasHaus
 
             if (selectionAllowed && (TermekAdatok)dataGridView1.CurrentRow.DataBoundItem != null)
             {
-                // A KÈszlet mÛdosÌt·s elmentÈse POST utasÌt·ssal
+                // A K√©szlet m√≥dos√≠t√°s elment√©se POST utas√≠t√°ssal
                 TermekAdatok tmpRow = (TermekAdatok)dataGridView1.CurrentRow.DataBoundItem;
                 int localInvNew = tmpRow.LocalInventoryColumnTmp;
                 int localInvOld = tmpRow.LocalInventoryColumn;
@@ -228,15 +228,15 @@ namespace RaktarKeszletDasHaus
                 string? productBvin = tmpRow.BvinColumn;
 
                 DialogResult confirmResult = MessageBox.Show(
-                    $"Biztos szeretnÈd mÛdosÌtani az al·bbi KÈszletet:\n\nNÈv: {termekName}\nSKU: {termekSKU}\n\nRÈgi Bolti kÈszlet: {localInvOld}\n⁄J Bolti kÈszlet: {localInvNew}\nRÈgi Online kÈszlet: {onlineInvOld}\n⁄J Online kÈszlet: {onlineInvNew}",
-                    "Biztos szeretnÈl MÛdosÌt·sokat vÈgezni?",
+                    $"Biztos szeretn√©d m√≥dos√≠tani az al√°bbi K√©szletet:\n\nN√©v: {termekName}\nSKU: {termekSKU}\n\nR√©gi Bolti k√©szlet: {localInvOld}\n√öJ Bolti k√©szlet: {localInvNew}\nR√©gi Online k√©szlet: {onlineInvOld}\n√öJ Online k√©szlet: {onlineInvNew}",
+                    "Biztos szeretn√©l M√≥dos√≠t√°sokat v√©gezni?",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Question
                 );
 
                 if (confirmResult == DialogResult.Yes)
                 {
-                    // KÈszlet MÛdosÌt·s vÈghezvitele
+                    // K√©szlet M√≥dos√≠t√°s v√©ghezvitele
                     await apiDataManager.PostInventoryUpdate(productBvin, invBvin, localInvNew, localInvOld, onlineInvNew, onlineInvOld);
                     TermekAdatok tmp = apiDataManager.GetOneProductData((TermekAdatok)dataGridView1.CurrentRow.DataBoundItem);
 
@@ -253,12 +253,12 @@ namespace RaktarKeszletDasHaus
 
         private void FilterResults()
         {
-            // Form komponensek adatainak begy˚jtÈse
+            // Form komponensek adatainak begy√ªjt√©se
             selectedCategory = (HCAllCategory)comboBox1.SelectedItem;
             selectedTermekName = textBox1.Text;
             selectedTermekSKU = textBox2.Text;
 
-            // 1. Minden_textbox_¸res
+            // 1. Minden_textbox_√ºres
             if (selectedTermekName.Equals(string.Empty) && selectedTermekSKU.Equals(string.Empty))
             {
                 // Filter for all categories
@@ -276,7 +276,7 @@ namespace RaktarKeszletDasHaus
                     TermekekListaDataSource = searchResult;
                 }
             }
-            // 2. A termeknev nem ¸res, skunÈv ¸res
+            // 2. A termeknev nem √ºres, skun√©v √ºres
             else if (!selectedTermekName.Equals(string.Empty) && selectedTermekSKU.Equals(string.Empty))
             {
                 // Filter for all categories
@@ -295,7 +295,7 @@ namespace RaktarKeszletDasHaus
                     TermekekListaDataSource = searchResult;
                 }
             }
-            // 3. A termeknev ¸res, skunÈv nem ¸res
+            // 3. A termeknev √ºres, skun√©v nem √ºres
             else if (selectedTermekName.Equals(string.Empty) && !selectedTermekSKU.Equals(string.Empty))
             {
                 // Filter for all categories
@@ -314,7 +314,7 @@ namespace RaktarKeszletDasHaus
                     TermekekListaDataSource = searchResult;
                 }
             }
-            // 4. A termeknev nem ¸res, skunÈv nem ¸res
+            // 4. A termeknev nem √ºres, skun√©v nem √ºres
             else if (!selectedTermekName.Equals(string.Empty) && !selectedTermekSKU.Equals(string.Empty))
             {
                 // Filter for all categories
@@ -334,7 +334,7 @@ namespace RaktarKeszletDasHaus
                 }
             }
 
-            // Ha nincs kiv·lasztva semmi a T·bl·zatbÛl -> a cÌmek jelzik + letiltom az input gombokat
+            // Ha nincs kiv√°lasztva semmi a T√°bl√°zatb√≥l -> a c√≠mek jelzik + letiltom az input gombokat
             if (TermekekListaDataSource.Count <= 0)
             {
                 ClearSelectedProductData();
@@ -353,7 +353,7 @@ namespace RaktarKeszletDasHaus
                 saveButton.Enabled = true;
             }
 
-            // A friss termÈksz˚rÈs hozz·rendelÈse a datagridview-hoz
+            // A friss term√©ksz√ªr√©s hozz√°rendel√©se a datagridview-hoz
             DGBindigSource.DataSource = TermekekListaDataSource;
 
         }
@@ -361,7 +361,7 @@ namespace RaktarKeszletDasHaus
         private void SetDataGridView()
         {
 
-            //Adatt·bla MÛdosÌt·sa Ès be·llÌt·sa
+            //Adatt√°bla M√≥dos√≠t√°sa √©s be√°ll√≠t√°sa
             dataGridView1.BackgroundColor = DasHausWhite;
             dataGridView1.AutoGenerateColumns = false;
             dataGridView1.MultiSelect = false;
@@ -389,19 +389,19 @@ namespace RaktarKeszletDasHaus
             int dgw = dataGridView1.Width;
 
             dataGridView1.Columns["CategoryColumn"].DisplayIndex = 0;
-            dataGridView1.Columns["CategoryColumn"].HeaderText = "KategÛria";
+            dataGridView1.Columns["CategoryColumn"].HeaderText = "Kateg√≥ria";
             dataGridView1.Columns["CategoryColumn"].Width = Convert.ToInt32(dgw * 0.17);
             dataGridView1.Columns["SKUColumn"].DisplayIndex = 1;
             dataGridView1.Columns["SKUColumn"].HeaderText = "SKU";
             dataGridView1.Columns["SKUColumn"].Width = Convert.ToInt32(dgw * 0.15);
             dataGridView1.Columns["ProductNameColumn"].DisplayIndex = 2;
-            dataGridView1.Columns["ProductNameColumn"].HeaderText = "TermÈknÈv";
+            dataGridView1.Columns["ProductNameColumn"].HeaderText = "Term√©kn√©v";
             dataGridView1.Columns["ProductNameColumn"].Width = Convert.ToInt32(dgw * 0.48);
             dataGridView1.Columns["LocalInventoryColumn"].DisplayIndex = 3;
-            dataGridView1.Columns["LocalInventoryColumn"].HeaderText = "Bolti kÈszlet";
+            dataGridView1.Columns["LocalInventoryColumn"].HeaderText = "Bolti k√©szlet";
             dataGridView1.Columns["LocalInventoryColumn"].Width = Convert.ToInt32(dgw * 0.10);
             dataGridView1.Columns["OnlineInventoryColumn"].DisplayIndex = 4;
-            dataGridView1.Columns["OnlineInventoryColumn"].HeaderText = "Online kÈszlet";
+            dataGridView1.Columns["OnlineInventoryColumn"].HeaderText = "Online k√©szlet";
             dataGridView1.Columns["OnlineInventoryColumn"].Width = Convert.ToInt32(dgw * 0.10);
             dataGridView1.Columns["BvinColumn"].Visible = false;
             dataGridView1.Columns["BvinColumn"].DisplayIndex = 5;
@@ -428,16 +428,16 @@ namespace RaktarKeszletDasHaus
 
         private void ClearSelectedProductData()
         {
-            // Forms komponensek alaphelyzetbe ·llÌt·sa 
-            termekNevL.Text = "nincs termÈk kiv·lasztva";
+            // Forms komponensek alaphelyzetbe √°ll√≠t√°sa 
+            termekNevL.Text = "nincs term√©k kiv√°lasztva";
             toolTip1.SetToolTip(termekNevL, termekNevL.Text);
-            skuNevL.Text = "nincs termÈk kiv·lasztva";
+            skuNevL.Text = "nincs term√©k kiv√°lasztva";
             toolTip1.SetToolTip(skuNevL, skuNevL.Text);
-            kategoriaNevL.Text = "nincs termÈk kiv·lasztva";
+            kategoriaNevL.Text = "nincs term√©k kiv√°lasztva";
             toolTip1.SetToolTip(kategoriaNevL, kategoriaNevL.Text);
-            arNevL.Text = "nincs termÈk kiv·lasztva";
+            arNevL.Text = "nincs term√©k kiv√°lasztva";
             toolTip1.SetToolTip(arNevL, arNevL.Text);
-            bvinNevL.Text = "nincs termÈk kiv·lasztva";
+            bvinNevL.Text = "nincs term√©k kiv√°lasztva";
             toolTip1.SetToolTip(bvinNevL, bvinNevL.Text);
             textBox3.Text = string.Empty;
             textBox4.Text = string.Empty;
