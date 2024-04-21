@@ -491,19 +491,13 @@
         }
 
         #endregion
-        private DataGridView dataGridView1;
         private Panel panel1;
         private Panel panel2;
-        private ComboBox comboBox1;
         private Label label1;
         private Label label2;
-        private TextBox textBox1;
         private Label label3;
-        private TextBox textBox2;
         private Label label5;
-        private TextBox textBox3;
         private Label label6;
-        private TextBox textBox4;
         private Button localInvSub;
         private Button localInvAdd;
         private Button onlineInvAdd;
@@ -525,5 +519,11 @@
         private Button clear_productname;
         private Button button1;
         private Button saveButton;
+        public TextBox textBox1;
+        public TextBox textBox2;
+        public TextBox textBox3;
+        public TextBox textBox4;
+        public DataGridView dataGridView1;
+        public ComboBox comboBox1;
     }
 }

@@ -17,7 +17,7 @@ namespace RaktarKeszletDasHaus
         private List<HCAllCategory> categories;
         private List<TermekAdatok> TermekekListaDataSource;
         private List<TermekAdatok> OriginalTermekLista;
-        private BindingSource DGBindigSource;
+        public BindingSource DGBindigSource;
         private bool selectionAllowed = false;
         private ApiDataManager apiDataManager;
 
@@ -148,19 +148,19 @@ namespace RaktarKeszletDasHaus
             FilterResults();
         }
 
-        private void clear_productname_Click(object sender, EventArgs e)
+        public void clear_productname_Click(object sender, EventArgs e)
         {
             textBox1.Clear();
             FilterResults();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void button1_Click(object sender, EventArgs e)
         {
             textBox2.Clear();
             FilterResults();
         }
 
-        private void localInvAdd_Click(object sender, EventArgs e)
+        public void localInvAdd_Click(object sender, EventArgs e)
         {
             int tmp = Convert.ToInt32(textBox3.Text.ToString());
             tmp += 1;
@@ -170,7 +170,7 @@ namespace RaktarKeszletDasHaus
             tmpRow.Cells["LocalInventoryColumnTmp"].Value = tmp.ToString();
         }
 
-        private void localInvSub_Click(object sender, EventArgs e)
+        public void localInvSub_Click(object sender, EventArgs e)
         {
             int tmp = Convert.ToInt32(textBox3.Text.ToString());
             if (tmp > 0)
@@ -183,7 +183,7 @@ namespace RaktarKeszletDasHaus
             tmpRow.Cells["LocalInventoryColumnTmp"].Value = tmp.ToString();
         }
 
-        private void onlineInvAdd_Click(object sender, EventArgs e)
+        public void onlineInvAdd_Click(object sender, EventArgs e)
         {
             int tmp = Convert.ToInt32(textBox4.Text.ToString());
             tmp += 1;
@@ -193,7 +193,7 @@ namespace RaktarKeszletDasHaus
             tmpRow.Cells["OnlineInventoryColumnTmp"].Value = tmp.ToString();
         }
 
-        private void onlineInvSub_Click(object sender, EventArgs e)
+        public void onlineInvSub_Click(object sender, EventArgs e)
         {
             int tmp = Convert.ToInt32(textBox4.Text.ToString());
             if (tmp > 0)
@@ -224,7 +224,7 @@ namespace RaktarKeszletDasHaus
 
 
                 await apiDataManager.PostInventoryUpdate(productBvin, invBvin, localInvNew, localInvOld, onlineInvNew, onlineInvOld);
-                
+
                 apiDataManager.GetData();
 
                 this.categories = apiDataManager.Categories.ToList();
