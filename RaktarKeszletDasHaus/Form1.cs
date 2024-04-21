@@ -221,12 +221,8 @@ namespace RaktarKeszletDasHaus
                 int onlineInvOld = Convert.ToInt32(tmpRow.Cells["OnlineInventoryColumn"].Value);
                 string invBvin = tmpRow.Cells["OnlineInventoryBvinColumn"].Value.ToString();
                 string productBvin = tmpRow.Cells["BvinColumn"].Value.ToString();
-
-
                 await apiDataManager.PostInventoryUpdate(productBvin, invBvin, localInvNew, localInvOld, onlineInvNew, onlineInvOld);
-                
                 apiDataManager.GetData();
-
                 this.categories = apiDataManager.Categories.ToList();
                 this.OriginalTermekLista = apiDataManager.Products.ToList();
                 this.TermekekListaDataSource = OriginalTermekLista.ToList();
@@ -237,7 +233,6 @@ namespace RaktarKeszletDasHaus
                 comboBox1.SelectedIndex = 0;
 
                 DGBindigSource.DataSource = TermekekListaDataSource;
-
             }
         }
 
