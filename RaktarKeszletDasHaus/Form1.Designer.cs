@@ -493,7 +493,6 @@
         #endregion
         private Panel panel1;
         private Panel panel2;
-        private ComboBox comboBox1;
         private Label label1;
         private Label label2;
         private Label label3;
@@ -525,5 +524,6 @@
         public TextBox textBox3;
         public TextBox textBox4;
         public DataGridView dataGridView1;
+        public ComboBox comboBox1;
     }
 }

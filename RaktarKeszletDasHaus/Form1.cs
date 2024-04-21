@@ -17,7 +17,7 @@ namespace RaktarKeszletDasHaus
         private List<HCAllCategory> categories;
         private List<TermekAdatok> TermekekListaDataSource;
         private List<TermekAdatok> OriginalTermekLista;
-        private BindingSource DGBindigSource;
+        public BindingSource DGBindigSource;
         private bool selectionAllowed = false;
         private ApiDataManager apiDataManager;
 

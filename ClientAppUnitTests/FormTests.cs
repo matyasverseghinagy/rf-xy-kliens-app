@@ -1,5 +1,5 @@
 ﻿using RaktarKeszletDasHaus;
-using System.Runtime.CompilerServices;
+using RaktarKeszletDasHaus.Models;
 using System.Windows.Forms;
 
 namespace ClientAppUnitTests
@@ -15,8 +15,8 @@ namespace ClientAppUnitTests
             form = new Form1();
         }
 
-        [TestCase("Mock Product Name")]
         [Category("Szűrők törlése")]
+        [TestCase("Mock Product Name")]
         public void TestProductNameFilterClear(string filterExpression)
         {
             form.textBox1.Text = filterExpression;
@@ -67,6 +67,7 @@ namespace ClientAppUnitTests
             TestInventoryModification(baseAmount, expectedAmount, form.textBox4, form.onlineInvSub_Click);
         }
 
+        // alapmetódus készletmódosítás-tesztekre
         private void TestInventoryModification(int baseAmount, int expectedAmount, TextBox txt, Action<object, EventArgs> modify)
         {
             // CurrentCell megadása kell, hogy az eseménykiszolgáló ne dobjon hibát
@@ -78,6 +79,32 @@ namespace ClientAppUnitTests
             modify.Invoke(this, EventArgs.Empty);
 
             Assert.That(int.Parse(txt.Text), Is.EqualTo(expectedAmount));
+        }
+
+        [Category("Szűrés")]
+        [TestCase("Mosógép")]
+        public void TestProductNameFilter(string filterExpression)
+        {
+            form.textBox1.Text = filterExpression;
+
+            var products = form.DGBindigSource.Cast<TermekAdatok>();
+
+            var filteredOutProducts = products.Where(p => !p.ProductNameColumn.Contains(form.textBox1.Text, StringComparison.OrdinalIgnoreCase));
+
+            Assert.That(filteredOutProducts.Count(), Is.EqualTo(0));
+        }
+
+        [Category("Szűrés")]
+        [TestCase("129")]
+        public void TestSKUFilter(string filterExpression)
+        {
+            form.textBox2.Text = filterExpression;
+
+            var products = form.DGBindigSource.Cast<TermekAdatok>();
+
+            var filteredOutProducts = products.Where(p => !p.SKUColumn.Contains(form.textBox2.Text, StringComparison.OrdinalIgnoreCase));
+
+            Assert.That(filteredOutProducts.Count(), Is.EqualTo(0));
         }
     }
 }
