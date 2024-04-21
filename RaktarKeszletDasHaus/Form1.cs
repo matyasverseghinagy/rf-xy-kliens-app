@@ -148,13 +148,13 @@ namespace RaktarKeszletDasHaus
             FilterResults();
         }
 
-        private void clear_productname_Click(object sender, EventArgs e)
+        public void clear_productname_Click(object sender, EventArgs e)
         {
             textBox1.Clear();
             FilterResults();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void button1_Click(object sender, EventArgs e)
         {
             textBox2.Clear();
             FilterResults();
@@ -224,7 +224,7 @@ namespace RaktarKeszletDasHaus
 
 
                 await apiDataManager.PostInventoryUpdate(productBvin, invBvin, localInvNew, localInvOld, onlineInvNew, onlineInvOld);
-                
+
                 apiDataManager.GetData();
 
                 this.categories = apiDataManager.Categories.ToList();
