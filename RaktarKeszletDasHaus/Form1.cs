@@ -442,6 +442,5 @@ namespace RaktarKeszletDasHaus
             textBox3.Text = string.Empty;
             textBox4.Text = string.Empty;
         }
-
     }
 }
