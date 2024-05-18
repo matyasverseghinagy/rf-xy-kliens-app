@@ -124,7 +124,7 @@ namespace RaktarKeszletDasHaus
             // Sikeres lefutás esetén visszajelzés a felhasználónak
             if (!FAIL_STATUS)
             {
-                MessageBox.Show("A legfrisebb adatokat használod!", "Adatfrissítés sikeres");
+                MessageBox.Show($"A legfrisebb adatokat használod!\nTermékek száma: {Products.Count}", "Adatfrissítés sikeres");
             }
         }
 
@@ -211,7 +211,7 @@ namespace RaktarKeszletDasHaus
                 // Ha nem az összes kategória cím van kiválasztva
                 if (category.Bvin != "all-cat-0")
                 {
-                    string productParametersFromCategoryEndpoint = $"DesktopModules/Hotcakes/API/rest/v1/products/?key={HotCakesAPIKey}&bycategory={currentCatBvin}&page=[1]&pagesize=[100]";
+                    string productParametersFromCategoryEndpoint = $"DesktopModules/Hotcakes/API/rest/v1/products/?key={HotCakesAPIKey}&bycategory={currentCatBvin}&page=[1]&pagesize=[3000]";
                     // Termékek letöltése adott kategóriánként
                     try
                     {
@@ -292,7 +292,7 @@ namespace RaktarKeszletDasHaus
             // Kitörlöm a kategóriák listából azokat amik szülőként viselkednek (van gyerek kategóriájuk) -> nem lesz termék duplikáció
             for (int i = 0; i < Categories.Count(); i++)
             {
-                if (Categories[i].Name.Equals("Háztartási nagygépek") || Categories[i].Name.Equals("Háztartási kisgépek") || Categories[i].Name.Equals("Szórakoztatás"))
+                if (Categories[i].Name.Equals("Háztartási nagygépek") || Categories[i].Name.Equals("Háztartási kisgépek") || Categories[i].Name.Equals("Szórakoztatás") || Categories[i].Name.Equals("Összes Kategória"))
                 {
                     Categories.RemoveAt(i);
                 }
