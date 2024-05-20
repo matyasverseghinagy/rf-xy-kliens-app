@@ -398,9 +398,9 @@
             label17.ForeColor = Color.FromArgb(20, 33, 61);
             label17.Location = new Point(0, 0);
             label17.Name = "label17";
-            label17.Size = new Size(111, 17);
+            label17.Size = new Size(121, 17);
             label17.TabIndex = 1;
-            label17.Text = "v1.2 - DasHaus ©";
+            label17.Text = "v1.2.1 - DasHaus ©";
             label17.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // clear_productname

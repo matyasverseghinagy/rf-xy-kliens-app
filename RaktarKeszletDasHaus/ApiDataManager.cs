@@ -1,4 +1,5 @@
 ﻿using RaktarKeszletDasHaus.Models;
+using System.Diagnostics;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
@@ -270,7 +271,7 @@ namespace RaktarKeszletDasHaus
             allcategory.Name = "Összes kategória";
             Categories.Add(allcategory);
 
-            string categoryEndpoint = $"/DesktopModules/Hotcakes/API/rest/v1/categories?key={HotCakesAPIKey}";
+            string categoryEndpoint = $"/DesktopModules/Hotcakes/API/rest/v1/categories?key={HotCakesAPIKey}&page=[1]&pagesize=[3000]";
 
             try
             {
@@ -289,12 +290,28 @@ namespace RaktarKeszletDasHaus
                 FAIL_STATUS = true;
             }
 
+            List<string> deletetebvins = new List<string>();
+
             // Kitörlöm a kategóriák listából azokat amik szülőként viselkednek (van gyerek kategóriájuk) -> nem lesz termék duplikáció
             for (int i = 0; i < Categories.Count(); i++)
             {
-                if (Categories[i].Name.Equals("Háztartási nagygépek") || Categories[i].Name.Equals("Háztartási kisgépek") || Categories[i].Name.Equals("Szórakoztatás") || Categories[i].Name.Equals("Összes Kategória"))
+                //Trace.WriteLine("Termék: " + Categories[i].Name.ToString());
+                if (Categories[i].ParentId == string.Empty && Categories[i].Bvin != "all-cat-0")
                 {
-                    Categories.RemoveAt(i);
+                    //Trace.WriteLine("Termék: " + Categories[i].Name.ToString());
+                    deletetebvins.Add(Categories[i].Bvin.ToString());
+                }
+            }
+
+            foreach (var index in deletetebvins) 
+            {
+                for (int i = 0; i < Categories.Count(); i++)
+                {
+                    if (Categories[i].Bvin.Equals(index))
+                    {
+                        Categories.RemoveAt(i);
+                        break;
+                    }
                 }
             }
         }
