@@ -212,7 +212,7 @@ namespace RaktarKeszletDasHaus
                 // Ha nem az összes kategória cím van kiválasztva
                 if (category.Bvin != "all-cat-0")
                 {
-                    string productParametersFromCategoryEndpoint = $"DesktopModules/Hotcakes/API/rest/v1/products/?key={HotCakesAPIKey}&bycategory={currentCatBvin}&page=[1]&pagesize=[500]";
+                    string productParametersFromCategoryEndpoint = $"DesktopModules/Hotcakes/API/rest/v1/products/?key={HotCakesAPIKey}&bycategory={currentCatBvin}&page=[1]&pagesize=[3000]";
                     // Termékek letöltése adott kategóriánként
                     try
                     {
