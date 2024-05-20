@@ -6,13 +6,13 @@
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
-    <ApplicationIcon>favicon.ico</ApplicationIcon>
+    <ApplicationIcon>favicon_new.ico</ApplicationIcon>
     <FileVersion>1.1.0.0</FileVersion>
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="favicon.ico" />
+    <Content Include="favicon_new.ico" />
   </ItemGroup>
 
   <ItemGroup>

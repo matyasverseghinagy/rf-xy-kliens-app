@@ -290,7 +290,6 @@ namespace RaktarKeszletDasHaus
                 FAIL_STATUS = true;
             }
 
-            Trace.WriteLine(Categories.Count);
             List<string> deletetebvins = new List<string>();
 
             // Kitörlöm a kategóriák listából azokat amik szülőként viselkednek (van gyerek kategóriájuk) -> nem lesz termék duplikáció
@@ -315,14 +314,6 @@ namespace RaktarKeszletDasHaus
                     }
                 }
             }
-
-            for (int i = 0; i < Categories.Count(); i++)
-            {
-                Trace.WriteLine("Termék: " + Categories[i].Name.ToString());
-            }
-
-            Trace.WriteLine(Categories.Count);
-
         }
 
         // Nem használt metódus - Bolti raktárkészlet lehetővé tétele hotcakes-en belül (csak egyszer kellett futtatni)
